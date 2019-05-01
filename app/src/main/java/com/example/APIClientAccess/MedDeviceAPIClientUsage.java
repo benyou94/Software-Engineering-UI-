@@ -17,7 +17,7 @@ import cz.msebera.android.httpclient.Header;
  *
  * Code created based on reference: https://loopj.com/android-async-http/
  *
- * TODO Need to update based on class diagram
+ * TODO Need to update methods based on class diagram
  *
  * @author Lisa Chen
  */
