@@ -1,9 +1,8 @@
-package APIClient;
+package com.example.APIClientAccess;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
 
 /**
  * <b><u>CS 4800 Class Project: Medical Devices Data with Blockchain</b></u>
