@@ -17,6 +17,8 @@ import cz.msebera.android.httpclient.Header;
  *
  * Code created based on reference: https://loopj.com/android-async-http/
  *
+ * TODO Need to update based on class diagram
+ *
  * @author Lisa Chen
  */
 public class MedDeviceAPIClientUsage {
@@ -26,7 +28,7 @@ public class MedDeviceAPIClientUsage {
     private String queryID;
 
     /** Default constructor */
-    public MedDeviceAPIClientUsage() { }
+    public MedDeviceAPIClientUsage() {}
 
     /**
      * Gets the queryID from the web API with the given parameters.
