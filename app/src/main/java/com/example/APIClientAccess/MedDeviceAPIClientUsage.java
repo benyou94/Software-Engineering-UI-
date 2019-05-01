@@ -1,4 +1,4 @@
-package APIClient;
+package com.example.APIClientAccess;
 
 import android.util.Log;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -17,6 +17,8 @@ import cz.msebera.android.httpclient.Header;
  *
  * Code created based on reference: https://loopj.com/android-async-http/
  *
+ * TODO Need to update methods based on class diagram
+ *
  * @author Lisa Chen
  */
 public class MedDeviceAPIClientUsage {
@@ -26,7 +28,7 @@ public class MedDeviceAPIClientUsage {
     private String queryID;
 
     /** Default constructor */
-    public MedDeviceAPIClientUsage() { }
+    public MedDeviceAPIClientUsage() {}
 
     /**
      * Gets the queryID from the web API with the given parameters.
