@@ -4,39 +4,43 @@
 
     <TextView
         android:id="@+id/productNameTextView"
-        android:layout_width="124dp"
+        android:layout_width="209dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="31dp"
-        android:layout_marginTop="75dp"
-        android:layout_marginEnd="256dp"
-        android:layout_marginBottom="619dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="171dp"
+        android:layout_marginBottom="648dp"
         android:text="Product Name"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/productSKUTextView"
-        android:layout_width="79dp"
-        android:layout_height="37dp"
+        android:layout_width="224dp"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/productNameTextView"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="54dp"
-        android:layout_marginEnd="280dp"
-        android:layout_marginBottom="565dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="135dp"
+        android:layout_marginBottom="570dp"
         android:text="Product SKU" />
 
     <TextView
         android:id="@+id/supplierTextView"
-        android:layout_width="74dp"
-        android:layout_height="33dp"
+        android:layout_width="226dp"
+        android:layout_height="61dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="283dp"
-        android:layout_marginBottom="511dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginEnd="131dp"
+        android:layout_marginBottom="494dp"
         android:text="Supplier name" />
 
 </RelativeLayout>

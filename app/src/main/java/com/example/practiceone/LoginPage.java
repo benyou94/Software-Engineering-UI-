@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
-public class MainActivity extends AppCompatActivity {
+public class LoginPage extends AppCompatActivity {
 
     //Creating variables to hold loginID,loginPassword
     private EditText Name;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void open2(){
-        Intent intent = new Intent(this, SecondActivity.class);
+        Intent intent = new Intent(this, SearchParameterPage.class);
         startActivity(intent);
 
     }
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (userID.equals("") && userPassword.equals("")){
 
-            Intent intent = new Intent(this, SecondActivity.class);
+            Intent intent = new Intent(this, SearchParameterPage.class);
             startActivity(intent);
 
         }
