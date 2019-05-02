@@ -10,17 +10,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".searchResultActivity"></activity>
         <activity
-            android:name=".ThirdActivity"
+            android:name=".SearchResultPage"
             android:label="@string/title_activity_third"
 
-            android:parentActivityName=".SecondActivity"/>
+            android:parentActivityName=".SearchParameterPage"/>
         <activity
-            android:name=".SecondActivity"
+            android:name=".SearchParameterPage"
             android:label="@string/title_activity_second"
             android:theme="@style/NoActionBar" /> <!-- this line removes the titlebar -->
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

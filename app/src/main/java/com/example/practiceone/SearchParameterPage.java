@@ -3,13 +3,12 @@ package com.example.practiceone;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class SecondActivity extends AppCompatActivity {
+public class SearchParameterPage extends AppCompatActivity {
 
     //Creating Nessiary variables
     private EditText productSKUString; //EditText for Textfield
@@ -63,7 +62,7 @@ public class SecondActivity extends AppCompatActivity {
         else{
 
             informationTextView.setText("");
-            Intent intent = new Intent(this, ThirdActivity.class);
+            Intent intent = new Intent(this, SearchResultPage.class);
                 intent.putExtra(productSKUExtra, productSKU);
                 intent.putExtra(productNameExtra, productName);
                 intent.putExtra(supplierExtra, supplierName);
