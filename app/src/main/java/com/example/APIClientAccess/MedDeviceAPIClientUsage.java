@@ -39,6 +39,7 @@ public class MedDeviceAPIClientUsage {
     public String getQueryID(String blockchainID) throws JSONException, InterruptedException {
         initializeQueryID(populatePOSTParams(blockchainID));
 
+        Log.d("LisaUsage", "Called");
         //takes a while before queryID is available
         while (queryID == null) {
         /*
@@ -47,6 +48,7 @@ public class MedDeviceAPIClientUsage {
          */
         }
 
+        Log.d("LisaUsage", "Called2:" + queryID);
         return queryID;
     }
 
@@ -72,6 +74,7 @@ public class MedDeviceAPIClientUsage {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     queryID = response.getString(QUERY_ID_PARAM);
+                    Log.d("LisaUsage", "Called3");
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.d("Error", "Unable to convert the queryID to String");
@@ -86,11 +89,11 @@ public class MedDeviceAPIClientUsage {
                         "result for post");
             }
 
-            //Needed to avoid errors with AsyncTask in main method
-            @Override
-            public boolean getUseSynchronousMode() {
-                return false;
-            }
+//            //Needed to avoid errors with AsyncTask in main method
+//            @Override
+//            public boolean getUseSynchronousMode() {
+//                return false;
+//            }
         });
     }
 
