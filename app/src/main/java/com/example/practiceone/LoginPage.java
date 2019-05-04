@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-//hi!
+
 public class LoginPage extends AppCompatActivity {
 
     //Creating variables to hold loginID,loginPassword
