@@ -26,6 +26,8 @@ public class MedDeviceAPIClientUsage {
     private final String BLOCKCHAIN_PARAM = "blockchainID";
     private final String QUERY_ID_PARAM = "queryID";
     private String queryID;
+    private JSONArray data_array;
+    private RequestParams queryIDParam;
 
     /** Default constructor */
     public MedDeviceAPIClientUsage() {}
@@ -52,13 +54,23 @@ public class MedDeviceAPIClientUsage {
         return queryID;
     }
 
-    private void getJSONResults()
-    {
+
+    public JSONArray getJSONResults(String blockchainID) throws JSONException {
         /*
         TODO do the get() for MedDeviceAPIClient using the queryID
         Note that this will also require to wait a period of time, so use the method you used in
         getQueryID
          */
+        initializeQueryID(populatePOSTParams(blockchainID));
+        while (queryID == null);
+
+        queryIDParam = new RequestParams();
+        Log.d("LisaDataArray", queryID);
+        queryIDParam.add(QUERY_ID_PARAM, queryID);
+
+        initializeDataArray();
+
+        return data_array;
     }
 
     /**
@@ -88,12 +100,6 @@ public class MedDeviceAPIClientUsage {
                 Log.d("Error", "Somehow accessed onSuccess() method with a JSONArray " +
                         "result for post");
             }
-
-//            //Needed to avoid errors with AsyncTask in main method
-//            @Override
-//            public boolean getUseSynchronousMode() {
-//                return false;
-//            }
         });
     }
 
@@ -107,5 +113,31 @@ public class MedDeviceAPIClientUsage {
         HashMap<String, String> hashParams = new HashMap<String, String>();
         hashParams.put(BLOCKCHAIN_PARAM, blockchainID);
         return new RequestParams(hashParams);
+    }
+
+    /**
+     * Runs getQueryID to compose JSONArray object.
+     * @params blockchainID This is the literal string "blockchainID"
+     * @throws JSONException and InterruptedException
+     */
+    public void initializeDataArray() throws JSONException {
+        MedDeviceAPIClient.get(QUERY_ACCESS_URL,queryIDParam, new JsonHttpResponseHandler() {
+//        MedDeviceAPIClient.get(QUERY_ACCESS_URL,null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    data_array = response.getJSONArray("data");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            //unused method
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Log.d("Error", "Somehow accessed onSuccess() method with a JSONArray " +
+                        "result for post");
+            }
+        });
     }
 }
