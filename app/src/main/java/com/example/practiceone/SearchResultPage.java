@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -12,8 +13,12 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.APIClientAccess.MedDeviceAPIClientUsage;
+import com.example.APIClientAccess.BlockChainQueryAPIClientUsage;
+import com.example.Data.Component;
+import com.example.Data.MedProduct;
+import com.example.ResultParsers.QueryResultParser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.w3c.dom.Text;
 
@@ -54,14 +59,14 @@ public class SearchResultPage extends AppCompatActivity {
 
         CustomAdapter customAdapter = new CustomAdapter();
 
-        listview.setAdapter(customAdapter);
+//        listview.setAdapter(customAdapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         queryTask = new SearchTask();
-        queryTask.execute("1"); //TODO change for actual parameters from UI
+        queryTask.execute("1", null, null, null); //TODO change for actual parameters from UI
     }
 
     //CustomAdapter for the custoom ListView Display
@@ -129,14 +134,27 @@ public class SearchResultPage extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            //TODO changed for JSON return and multiple parameters passed
             try {
-                MedDeviceAPIClientUsage clientUser = new MedDeviceAPIClientUsage();
-                clientUser.getJSONResults("1");
+                BlockChainQueryAPIClientUsage clientUser = new BlockChainQueryAPIClientUsage();
+                JSONArray results = clientUser.getJSONResults(params[0], params[1],params[2],
+                        params[3]);
+                QueryResultParser queryParser = new QueryResultParser(results);
+                ArrayList<Component> productResults = queryParser.getParsedResults();
+                for (Component c : productResults) {
+                    MedProduct product = (MedProduct) c;
+                    Log.d("LisaComponent", "Name: " + c.getName() + ", SKU: " + c.getSKU() +
+                            ", Supplier: " + c.getSupplier() + ", OrderID: " + product.getOrderID() +
+                            ", OrderDate: " + product.getOrderDate());
+                }
                 if (isCancelled())
                     return null;
-                return clientUser.getQueryID((params[0])); //TODO do not pass queryID
-            } catch (JSONException | InterruptedException e) {
+                String queryID = null;
+                while (queryID == null) {
+                    queryID = clientUser.getQueryID();
+                }
+
+                return queryID; //TODO do not pass queryID
+            } catch (JSONException e) {
                 return "Unable to retrieve data. Parameters may be invalid.";
             }
         }
@@ -157,13 +175,13 @@ public class SearchResultPage extends AppCompatActivity {
          * @param result The result from the query search
          */
         private void populateSearchResults(String result) {
-            //TODO change for JSON results
-            //ArrayList<String> results = new ArrayList<>();
-            //results.add(""); //TODO fix layout so this line is not needed
-            //results.add("Query ID: " + result);
-            //arrayAdapter = new ArrayAdapter(SearchResultPage.this,
-                    //android.R.layout.simple_list_item_1, results);
-            //listview.setAdapter(arrayAdapter);
+//            TODO change for JSON results
+//            ArrayList<String> results = new ArrayList<>();
+//            results.add(""); //TODO fix layout so this line is not needed
+//            results.add("Query ID: " + result);
+//            arrayAdapter = new ArrayAdapter(SearchResultPage.this,
+//                    android.R.layout.simple_list_item_1, results);
+//            listview.setAdapter(arrayAdapter);
         }
 
         /** To set up the loading dialog seen by the user. */

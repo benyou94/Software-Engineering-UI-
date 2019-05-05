@@ -2,6 +2,7 @@ package com.example.ResultParsers;
 
 import com.example.Data.Component;
 import com.example.Data.MedProduct;
+import com.example.APIClientAccess.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +25,7 @@ public class QueryResultParser implements ResultParserInterface {
     private final String PRODUCT_NAME_KEY = "productName";
     private final String SUPPLIER_KEY = "previousOwner"; //TODO verify correct and not owner
     private final String ORDER_ID_KEY = "orderID"; //TODO update this to match API
-    private final String ORDER_DATE_KEY = "orderDate"; //TODO update this to match API
+    private final String ORDER_DATE_KEY = "transactionDate"; //TODO update this to match API
 
     /**
      * Constructs the parser with the JSONArray results to parse.
@@ -47,18 +48,26 @@ public class QueryResultParser implements ResultParserInterface {
      * @throws JSONException
      */
     private void parseResults(JSONArray results) throws JSONException {
-        if (results != null)
-        {
+        if (results != null) {
+            String[] keys = {PRODUCT_ID_KEY, PRODUCT_NAME_KEY, SUPPLIER_KEY, ORDER_ID_KEY,
+                    ORDER_DATE_KEY};
+            String[] params = new String[keys.length];
+            //retrieves each result
             for (int i = 0; i < results.length(); i++) {
                 JSONObject result = results.getJSONObject(i);
-                //TODO need to figure out exception for when it cannot find orderID or orderDate
-                String productID = result.getString(PRODUCT_ID_KEY);
-                String productName = result.getString(PRODUCT_NAME_KEY);
-                String supplier = result.getString(SUPPLIER_KEY);
-                String orderID = result.getString(ORDER_ID_KEY);
-                String orderDate = result.getString(ORDER_DATE_KEY);
-                MedProduct newProduct = new MedProduct(productID,productName,supplier, orderID,
-                        orderDate);
+
+                //retrieves the parameter of each result to pass to MedProduct
+                for (int key = 0; key < keys.length; key++) {
+                    try {
+                        params[key] = result.getString(keys[key]);
+                    }
+                    catch (JSONException e) {
+                        params[key] = "";
+                    }
+                }
+
+                MedProduct newProduct = new MedProduct(params[0],params[1],params[2], params[3],
+                        params[4]);
                 parsedResults.add(newProduct);
                 //TODO need to add section to calculate creating the subcomponents
             }
