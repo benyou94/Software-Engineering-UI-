@@ -19,7 +19,7 @@ import cz.msebera.android.httpclient.Header;
  *
  * TODO Need to update methods based on class diagram
  *
- * @author Lisa Chen
+ * @author Lisa Chen and Johnson Wei
  */
 public class MedDeviceAPIClientUsage {
     private final String QUERY_ACCESS_URL = "query/";
