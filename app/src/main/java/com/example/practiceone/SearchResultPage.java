@@ -130,6 +130,7 @@ public class SearchResultPage extends AppCompatActivity {
             //TODO changed for JSON return and multiple parameters passed
             try {
                 MedDeviceAPIClientUsage clientUser = new MedDeviceAPIClientUsage();
+                clientUser.getJSONResults("1");
                 if (isCancelled())
                     return null;
                 return clientUser.getQueryID((params[0])); //TODO do not pass queryID
