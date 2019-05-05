@@ -10,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.APIClientAccess.MedDeviceAPIClientUsage;
 
 import org.json.JSONException;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -26,7 +28,7 @@ public class SearchResultPage extends AppCompatActivity {
     private ArrayAdapter arrayAdapter;
     ListView listview;
 
-    int[] productSKUInteger = {0,1,2,3,4,5};
+    String[] productSKUInteger = {"0","1","2","3","4","5"};
 
     String[] productNameString = {"Computer","Pokemon","Tomogachi","Jojo's Bizarre Adventure", "Maple Story","Weed"};
     String[] supplierString = {"Sensei","Ash","Ben","GIOGIO","Nexon","Snoop Dog"};
@@ -35,8 +37,10 @@ public class SearchResultPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
+
         //Toolbar toolbar = findViewById(R.id.toolbar);
 
+        //getSupportActionBar().setTitle("Search Results");
         //Gets the search results from activity two
         Intent intent = getIntent();
 
@@ -44,6 +48,11 @@ public class SearchResultPage extends AppCompatActivity {
 
         //Gets the listview from activity_third
         listview = (ListView)findViewById(R.id.listView);
+
+
+        CustomAdapter customAdapter = new CustomAdapter();
+
+        listview.setAdapter(customAdapter);
     }
 
     @Override
@@ -53,6 +62,7 @@ public class SearchResultPage extends AppCompatActivity {
         queryTask.execute("1"); //TODO change for actual parameters from UI
     }
 
+    //CustomAdapter for the custoom ListView Display
     class CustomAdapter extends BaseAdapter{
 
         @Override
@@ -72,7 +82,19 @@ public class SearchResultPage extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return null;
+
+            convertView = getLayoutInflater().inflate(R.layout.listview_detail,null);
+
+            TextView textview_name = (TextView) convertView.findViewById((R.id.productNameTextView));
+            TextView textview_sku =  (TextView) convertView.findViewById(R.id.productSKUTextView);
+            TextView textview_supplier = (TextView) convertView.findViewById((R.id.supplierTextView));
+
+            textview_name.setText(productNameString[position]);
+            textview_sku.setText(productSKUInteger[position]);
+            textview_supplier.setText(supplierString[position]);
+
+
+            return convertView;
         }
     }
 
@@ -133,12 +155,12 @@ public class SearchResultPage extends AppCompatActivity {
          */
         private void populateSearchResults(String result) {
             //TODO change for JSON results
-            ArrayList<String> results = new ArrayList<>();
-            results.add(""); //TODO fix layout so this line is not needed
-            results.add("Query ID: " + result);
-            arrayAdapter = new ArrayAdapter(SearchResultPage.this,
-                    android.R.layout.simple_list_item_1, results);
-            listview.setAdapter(arrayAdapter);
+            //ArrayList<String> results = new ArrayList<>();
+            //results.add(""); //TODO fix layout so this line is not needed
+            //results.add("Query ID: " + result);
+            //arrayAdapter = new ArrayAdapter(SearchResultPage.this,
+                    //android.R.layout.simple_list_item_1, results);
+            //listview.setAdapter(arrayAdapter);
         }
 
         /** To set up the loading dialog seen by the user. */
