@@ -40,7 +40,9 @@ public class SearchResultPage extends AppCompatActivity {
 
         //Toolbar toolbar = findViewById(R.id.toolbar);
 
-        //getSupportActionBar().setTitle("Search Results");
+        //Changes the actionbar Title
+        getSupportActionBar().setTitle("Search Results");
+
         //Gets the search results from activity two
         Intent intent = getIntent();
 

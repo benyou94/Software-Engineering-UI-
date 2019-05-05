@@ -11,15 +11,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+
             android:name=".SearchResultPage"
             android:label="@string/title_activity_third"
-
             android:parentActivityName=".SearchParameterPage"/>
         <activity
+
             android:name=".SearchParameterPage"
             android:label="@string/title_activity_second"
             android:theme="@style/NoActionBar" /> <!-- this line removes the titlebar -->
-        <activity android:name=".LoginPage">
+
+        <activity
+
+            android:name=".LoginPage"
+            android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
