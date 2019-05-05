@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 public class ItemAdapter extends BaseAdapter {
 
 
+
+
     @Override
     public int getCount() {
         return 0;
@@ -24,6 +26,14 @@ public class ItemAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        //view = getLayoutInflater().inflate(R.layout.custom_layout,null);
+
+
+
+
         return null;
     }
+
+
 }
