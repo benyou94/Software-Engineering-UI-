@@ -20,7 +20,6 @@ import com.example.ResultParsers.QueryResultParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -40,7 +39,10 @@ public class SearchResultPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        //Redirect's activityView to the called activity
         setContentView(R.layout.activity_third);
 
         //Toolbar toolbar = findViewById(R.id.toolbar);
@@ -53,23 +55,27 @@ public class SearchResultPage extends AppCompatActivity {
 
         String productSKUSting = intent.getStringExtra(SearchParameterPage.productSKUExtra);
 
-        //Gets the listview from activity_third
+        //Gets the listview from searchresultpage
         listview = (ListView)findViewById(R.id.listView);
 
 
+        //Creates a customAdapter (custom listview) for the listview
         CustomAdapter customAdapter = new CustomAdapter();
 
-//        listview.setAdapter(customAdapter);
+        //sets the listview to the custom adapter
+        listview.setAdapter(customAdapter);
     }
 
     @Override
     protected void onResume() {
+
         super.onResume();
         queryTask = new SearchTask();
-        queryTask.execute("1", null, null, null); //TODO change for actual parameters from UI
+
+        queryTask.execute("1", null, null, null);
     }
 
-    //CustomAdapter for the custoom ListView Display
+    //CustomAdapter for the custom ListView Display
     class CustomAdapter extends BaseAdapter{
 
         @Override
@@ -89,6 +95,8 @@ public class SearchResultPage extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+
+            //Creating a view and creating variables to grab data and store them in
 
             convertView = getLayoutInflater().inflate(R.layout.listview_detail,null);
 
