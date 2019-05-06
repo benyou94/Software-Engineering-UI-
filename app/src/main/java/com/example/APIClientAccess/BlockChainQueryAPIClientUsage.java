@@ -26,6 +26,7 @@ public class BlockChainQueryAPIClientUsage {
     private static final String PRODUCT_ID_KEY = "productID";
     private static final String PRODUCT_NAME_KEY = "productName";
     private static final String SUPPLIER_KEY = "previousOwner";
+    private static final String RESULT_DATA_KEY = "data";
     private String queryID;
     private JSONArray data_array;
 
@@ -106,7 +107,7 @@ public class BlockChainQueryAPIClientUsage {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    data_array = response.getJSONArray("data");
+                    data_array = response.getJSONArray(RESULT_DATA_KEY);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.d("Error", "Cannot initialize blockchain data with given params");

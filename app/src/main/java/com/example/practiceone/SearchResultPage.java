@@ -1,6 +1,7 @@
 package com.example.practiceone;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.example.APIClientAccess.BlockChainQueryAPIClientUsage;
 import com.example.Data.Component;
 import com.example.Data.MedProduct;
 import com.example.ResultParsers.QueryResultParser;
+import com.example.UnitTesting.TestDataGenerator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +34,7 @@ public class SearchResultPage extends AppCompatActivity {
     private final String LOADING_DIALOG_TEXT = "Loading Results. Please wait.";
     private ArrayAdapter arrayAdapter;
     ListView listview;
+    Context context;
 
 
     //Dummy test data. Change it to the API later.
@@ -80,6 +83,31 @@ public class SearchResultPage extends AppCompatActivity {
 
         //sets the listview to the custom adapter
         listview.setAdapter(customAdapter);
+
+        //TODO Lisa Test here
+
+        //need to pass context (you can only retrieve during onCreate
+        context = getApplicationContext();
+
+        ArrayList<Component> queryData = TestDataGenerator.getQueryData(context);
+        ArrayList<Component> componentData = TestDataGenerator.getComponentData(context);
+
+        if (queryData != null) {
+            for (Component item : queryData) {
+                MedProduct prod = (MedProduct) item;
+                Log.d("LisaUnitTest", "Name: " + prod.getName() + ", ProductID: " +
+                        prod.getSKU() + ",Supplier: " + prod.getSupplier() + ", OrderID " +
+                        prod.getOrderID() + ",Order Data: " + prod.getOrderDate());
+            }
+        }
+
+        if (componentData != null) {
+            for (Component item : componentData) {
+                Log.d("LisaUnitTest", "Name: " + item.getName() + ", ProductID: " +
+                        item.getSKU() + ",Supplier: " + item.getSupplier());
+            }
+        }
+        //TODO Lisa Test ENDS here
     }
 
     @Override
@@ -181,9 +209,9 @@ public class SearchResultPage extends AppCompatActivity {
                 int i =0;
                 for (Component c : productResults) {
                     MedProduct product = (MedProduct) c;
-                    Log.d("LisaComponent", "Name: " + c.getName() + ", SKU: " + c.getSKU() +
-                            ", Supplier: " + c.getSupplier() + ", OrderID: " + product.getOrderID() +
-                            ", OrderDate: " + product.getOrderDate());
+                    Log.d("LisaAPIConnectionTest", "Name: " + c.getName() + ", SKU: " +
+                            c.getSKU() + ", Supplier: " + c.getSupplier() + ", OrderID: " +
+                            product.getOrderID() + ", OrderDate: " + product.getOrderDate());
                     productNameArrayList.add(c.getName());
 
                     System.out.println("Arraylist: " +productNameArrayList.get(i));

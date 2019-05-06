@@ -36,6 +36,7 @@ public class QueryResultParser implements ResultParserInterface {
         parsedResults = new ArrayList<>();
         parseResults(results);
     }
+
     /**
      * Retrieves the results parsed into a list of Component objects.
      * @return The parsed results
@@ -80,13 +81,13 @@ public class QueryResultParser implements ResultParserInterface {
     /**
      * Retrieves the components of the given parent (through its parent ID).
      * @param parentID The parent ID of the product to find the subcomponents
-     * @return The parent
+     * @return A list of the parent's components
      */
     private ArrayList<Component> getParsedComponents(String parentID) throws JSONException {
         if (parentID == null || parentID == "")
             return null;
 
-        //TODO bring back once component section is working
+        //TODO bring back once component API access section is working (remove return null)
 //        ComponentAPIClientUsage compAPIAccess = new ComponentAPIClientUsage();
 //        ComponentResultParser subComponentParser = new
 //                ComponentResultParser(compAPIAccess.getJSONResults(parentID));
@@ -99,17 +100,19 @@ public class QueryResultParser implements ResultParserInterface {
     private void removeDuplicateResults() {
         Collections.sort(parsedResults);
 
-        for (int i = 0; i < parsedResults.size() - 2; i++) {
-            boolean foundDup = true;
+        for (int i = 0; i < parsedResults.size() - 1; i++) {
+            boolean foundAllDups = true;
             MedProduct comp1 = (MedProduct) parsedResults.get(i);
 
-            while (foundDup) {
+            while (foundAllDups) {
                 MedProduct comp2 = (MedProduct) parsedResults.get(i+1);
 
                 if (isDuplicateResult(comp1, comp2))
                     parsedResults.remove(i+1);
+                    if (i == parsedResults.size() - 1)
+                        foundAllDups = false;
                 else
-                    foundDup = false;
+                    foundAllDups = false;
             }
         }
     }

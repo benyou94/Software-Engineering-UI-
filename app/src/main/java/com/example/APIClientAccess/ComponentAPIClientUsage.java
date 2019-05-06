@@ -28,6 +28,7 @@ public class ComponentAPIClientUsage {
     private final String DB_ACCESS_URL = "database/";
     private final String PARENT_ID_KEY = "componentOf";
     private final String DB_QUERY_ID_KEY = "dbQueryID";
+    private static final String RESULT_DATA_KEY = "data";
     private String dbQueryID;
     private JSONArray data_array;
 
@@ -91,7 +92,7 @@ public class ComponentAPIClientUsage {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    data_array = response.getJSONArray("data");
+                    data_array = response.getJSONArray(RESULT_DATA_KEY);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.d("Error", "Cannot initialize database data with given params");
