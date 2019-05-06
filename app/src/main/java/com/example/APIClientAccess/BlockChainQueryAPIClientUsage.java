@@ -60,9 +60,9 @@ public class BlockChainQueryAPIClientUsage {
         initializeQueryID(populatePOSTParams(blockchainID, productID, productName, supplier));
 
         //wait until queryID is available
-        Log.d("LisaWhileLoop", "Entered while loop - check for infinite loop");
+        Log.d("LisaWhileLoop1", "Entered while loop in blockchain- check for infinite loop");
         while (queryID == null);
-        Log.d("LisaWhileLoop", "Ended loop - not infinite");
+        Log.d("LisaWhileLoop1", "Ended loop - not infinite");
 
         initializeDataArray(populateGETParams(queryID));
 

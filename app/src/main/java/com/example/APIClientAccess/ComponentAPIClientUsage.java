@@ -26,7 +26,7 @@ import cz.msebera.android.httpclient.Header;
 public class ComponentAPIClientUsage {
     //TODO update with API's requirements for accessing the database
     private final String DB_ACCESS_URL = "database/";
-    private final String PARENT_ID_KEY = "parentID";
+    private final String PARENT_ID_KEY = "componentOf";
     private final String DB_QUERY_ID_KEY = "dbQueryID";
     private String dbQueryID;
     private JSONArray data_array;
@@ -43,9 +43,9 @@ public class ComponentAPIClientUsage {
         initializeDBQueryID(populatePOSTParams(parentID));
 
         //wait until dbQueryID is available
-        Log.d("LisaWhileLoop", "Entered while loop - check for infinite loop");
+        Log.d("LisaWhileLoop2", "Entered while loop in ComponentAPI- check for infinite loop");
         while (dbQueryID == null);
-        Log.d("LisaWhileLoop", "Ended loop - not infinite");
+        Log.d("LisaWhileLoop2", "Ended loop - not infinite");
 
         initializeDataArray(populateGETParams(dbQueryID));
 
