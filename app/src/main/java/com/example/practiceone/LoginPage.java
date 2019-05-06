@@ -17,20 +17,24 @@ public class LoginPage extends AppCompatActivity {
     private EditText Password;
     private TextView Information;
     private Button LoginButton;
+    private Button createAccount;
     private int loginCounter = 3;
+    //private Button CreateAccount;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //create account page
+        createAccount = (Button)findViewById(R.id.CreateAccount);
+
 
         //Gets the details from the UI and puts them into the variables.
         Name = (EditText)findViewById(R.id.loginName);
         Password = (EditText)findViewById(R.id.loginPassword);
         LoginButton = (Button) findViewById((R.id.loginButton));
         Information = (TextView)findViewById(R.id.loginInformation) ;
-
 
         //Login ButtonListener.
         LoginButton.setOnClickListener(new View.OnClickListener() {
@@ -39,7 +43,14 @@ public class LoginPage extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
                 checkIDPWInfo(Name.getText().toString(), Password.getText().toString());
 
+            }
+        });
 
+        //Create Account listener
+        createAccount.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                openCreateAccount();
             }
         });
 
@@ -58,10 +69,8 @@ public class LoginPage extends AppCompatActivity {
 
 
         if (userID.equals("") && userPassword.equals("")){
-
             Intent intent = new Intent(this, SearchParameterPage.class);
             startActivity(intent);
-
         }
         else {
 
@@ -78,6 +87,27 @@ public class LoginPage extends AppCompatActivity {
 
 
     }
+    public void openCreateAccount(){
+        Intent intent = new Intent (this, CreateAccount.class );
+        startActivity(intent);
+
+    }
+
+    /*/create account page
+    Button createAccount = findViewById(R.id.CreateAccount);
+    createAccount.setOnClickListener(new View.OnClickListener()){
+        public void onClick(View v){
+            openCreateAccount();
+        }
+    }
+
+    public void openCreateAccount(){
+        Intent intent = new Intent (this, CreateAccount.class );
+        startActivity(intent);
+
+    }
+    */
+
 
 
 }
