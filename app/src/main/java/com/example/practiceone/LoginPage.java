@@ -25,7 +25,7 @@ public class LoginPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login_page);
         //create account page
         createAccount = (Button)findViewById(R.id.CreateAccount);
 
@@ -87,22 +87,5 @@ public class LoginPage extends AppCompatActivity {
         startActivity(intent);
 
     }
-
-    /*/create account page
-    Button createAccount = findViewById(R.id.CreateAccount);
-    createAccount.setOnClickListener(new View.OnClickListener()){
-        public void onClick(View v){
-            openCreateAccount();
-        }
-    }
-
-    public void openCreateAccount(){
-        Intent intent = new Intent (this, CreateAccount.class );
-        startActivity(intent);
-
-    }
-    */
-
-
 
 }
