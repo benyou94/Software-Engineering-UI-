@@ -27,91 +27,76 @@
             "productName": "Morphine-1"
         },
         {
-            "parentSKU": 1,
             "productID": 2,
             "previousOwner": "Hometown_Medical_Supply",
             "productName": "Morphine-2"
         },
         {
-            "parentSKU": 1,
             "productID": 3,
             "previousOwner": "Pomona_Medical_Supply",
             "productName": "Morphine-1"
         },
         {
-            "parentSKU": 1,
             "productID": 4,
             "previousOwner": "Pico_Medical_Supply",
             "productName": "Morphine-1"
         },
         {
-            "parentSKU": 2,
             "productID": 1,
             "previousOwner": "Pico_Medical_Supply",
             "productName": "Aspirin-1"
         },
         {
-            "parentSKU": 2,
             "productID": 2,
             "previousOwner": "Vermont_Medical_Supply",
             "productName": "Aspirin-2"
         },
         {
-            "parentSKU": 2,
             "productID": 3,
             "previousOwner": "Torrance_Medical_Supply",
             "productName": "Aspirin-2"
         },
         {
-            "parentSKU": 2,
             "productID": 4,
             "previousOwner": "Gardena_Medical_Supply",
             "productName": "Aspirin-1"
         },
         {
-            "parentSKU": 3,
             "productID": 1,
             "previousOwner": "Pico_Medical_Supply",
             "productName": "Hydrocodone-1"
         },
         {
-            "parentSKU": 3,
             "productID": 2,
             "previousOwner": "Torrance_Medical_Supply",
             "productName": "Hydrocodone-1"
         },
         {
-            "parentSKU": 3,
             "productID": 3,
             "previousOwner": "Compton_Medical_Supply",
             "productName": "Hydrocodone-1"
         },
         {
-            "parentSKU": 3,
             "productID": 4,
             "previousOwner": "Compton_Medical_Supply",
             "productName": "Hydrocodone-2"
         },
         {
-            "parentSKU": 4,
             "productID": 1,
             "previousOwner": "Compton_Medical_Supply",
             "productName": "Acetaminophen-2"
         },
         {
-            "parentSKU": 4,
             "productID": 2,
             "previousOwner": "Pico_Medical_Supply",
             "productName": "Acetaminophen-2"
         },
         {
-            "parentSKU": 4,
             "productID": 3,
             "previousOwner": "Pomona_Medical_Supply",
             "productName": "Acetaminophen-1"
         },
         {
-            "parentSKU": 4,
             "productID": 4,
             "previousOwner": "Torrance_Medical_Supply",
             "productName": "Acetaminophen-1"
