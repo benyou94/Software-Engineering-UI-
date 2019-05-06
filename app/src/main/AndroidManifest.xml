@@ -19,6 +19,9 @@
             android:name=".SearchParameterPage"
             android:theme="@style/NoActionBar" /> <!-- this line removes the titlebar -->
         <activity
+            android:name=".CreateAccount"
+            android:theme="@style/NoActionBar" />
+        <activity
             android:name=".LoginPage"
             android:theme="@style/NoActionBar">
             <intent-filter>
