@@ -17,13 +17,32 @@ import java.util.ArrayList;
 public class MedProduct extends Component {
     private String orderID;
     private String orderDate;
+
+    /**
+     * Constructs a medical product object (has no subcomponents) with describers.
+     * @param sku The medical product's SKU or reference ID
+     * @param name The medical product's name
+     * @param supplier The supplier of the medical product
+     * @param orderID The order ID associated with the purchase of this specific medical product
+     * @param orderDate The order date associated with the purchase of this specific medical product
+     */
     public MedProduct(String sku, String name, String supplier, String orderID, String orderDate) {
         super(sku, name, supplier);
         this.orderID = orderID;
         this.orderDate = orderDate;
     }
-    public MedProduct(String sku, String name, String supplier, ArrayList<Component> components,
-                     String orderID, String orderDate) {
+
+    /**
+     * Constructs a medical product object with its describers and its components.
+     * @param sku The medical product's SKU or reference ID
+     * @param name The medical product's name
+     * @param supplier The supplier of the medical product
+     * @param orderID The order ID associated with the purchase of this specific medical product
+     * @param orderDate The order date associated with the purchase of this specific medical product
+     * @param components The subcomponents of the medical product
+     */
+    public MedProduct(String sku, String name, String supplier, String orderID, String orderDate,
+                      ArrayList<Component> components) {
         super(sku, name, supplier, components);
         this.orderID = orderID;
         this.orderDate = orderDate;
@@ -42,33 +61,29 @@ public class MedProduct extends Component {
     public String getOrderDate() { return orderDate; }
 
     /**
-     * Compares the components first by its SKU, then by name, then by supplier.
-     * @param component
-     * @return
+     * Compares the MedProducts first by how its compared in its super method. Then, if it is still
+     * considered equivalent, does more comparisons by Order ID and Order Date.
+     * @param otherProduct The MedProduct to compare to this MedProduct object
+     * @return Negative if this object comes before compared object, positive if after, 0 if same
      */
     @Override
-    public int compareTo(@NonNull Component component) {
-        int supplierCompare = super.compareTo(component);
-        if (supplierCompare == 0) {
+    public int compareTo(@NonNull Component otherProduct) {
+        int superCompare = super.compareTo(otherProduct);
+        if (superCompare == 0) {
+
             try {
-                MedProduct medProduct = (MedProduct) component;
+                MedProduct medProduct = (MedProduct) otherProduct;
                 int orderIDCompare = this.orderID.compareTo(medProduct.orderID);
-                if (orderIDCompare == 0) {
+
+                if (orderIDCompare == 0)
                     return this.orderDate.compareTo(medProduct.orderDate);
-                }
-                else
-                    return orderIDCompare;
-            }
-            catch (ClassCastException e) {
+
+                return orderIDCompare;
+            } catch (ClassCastException e) {
                 e.printStackTrace();
                 Log.d("Error", "Failed to cast component to MedProduct.");
-
-            }
-            finally {
-                return supplierCompare;
             }
         }
-        else
-            return supplierCompare;
+        return superCompare;
     }
 }
