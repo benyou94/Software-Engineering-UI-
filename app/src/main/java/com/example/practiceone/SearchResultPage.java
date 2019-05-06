@@ -27,15 +27,19 @@ import java.util.ArrayList;
  * @author Lisa Chen and Ben You
  */
 public class SearchResultPage extends AppCompatActivity {
+
     private SearchTask queryTask;
     private final String LOADING_DIALOG_TEXT = "Loading Results. Please wait.";
     private ArrayAdapter arrayAdapter;
     ListView listview;
 
-    String[] productSKUInteger = {"0","1","2","3","4","5"};
 
-    String[] productNameString = {"Computer","Pokemon","Tomogachi","Jojo's Bizarre Adventure", "Maple Story","Weed"};
+    //Dummy test data. Change it to the API later.
+    String[] productSKUInteger = {"0000000000000000000000","11111111111111111111112222222222222222222222222222222222222222","2","3","4","5"};
+    String[] productNameString = {"Computer","Pokemon","Tomogachi","Jojo's Bizarre Adventure: HOLY SHIT I GOTA SHIT TON OF TEXT I GATTA REWWWEKK", "Maple Story","Weed"};
     String[] supplierString = {"Sensei","Ash","Ben","GIOGIO","Nexon","Snoop Dog"};
+
+    String productSKUSting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +52,14 @@ public class SearchResultPage extends AppCompatActivity {
         //Toolbar toolbar = findViewById(R.id.toolbar);
 
         //Changes the actionbar Title
-        getSupportActionBar().setTitle("Search Results");
+        getSupportActionBar().setTitle("Search Results:");
 
         //Gets the search results from activity two
         Intent intent = getIntent();
 
-        String productSKUSting = intent.getStringExtra(SearchParameterPage.productSKUExtra);
+        //This line should get the information from the variable in the second activity.
+        productSKUSting = intent.getStringExtra(SearchParameterPage.productSKUExtra);
+
 
         //Gets the listview from searchresultpage
         listview = (ListView)findViewById(R.id.listView);
@@ -72,6 +78,10 @@ public class SearchResultPage extends AppCompatActivity {
         super.onResume();
         queryTask = new SearchTask();
 
+
+
+        //Parameter ("BlockChain Choose", ProductID, productName, supplier)
+        //0=Etherium, 1=Hyper Ledger, 2=Open Chain
         queryTask.execute("1", null, null, null);
     }
 
@@ -97,16 +107,23 @@ public class SearchResultPage extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             //Creating a view and creating variables to grab data and store them in
-
             convertView = getLayoutInflater().inflate(R.layout.listview_detail,null);
 
+            //This assigns the listview_detail's TextViews into a variable we can display
             TextView textview_name = (TextView) convertView.findViewById((R.id.productNameTextView));
             TextView textview_sku =  (TextView) convertView.findViewById(R.id.productSKUTextView);
             TextView textview_supplier = (TextView) convertView.findViewById((R.id.supplierTextView));
+            TextView textview_orderID = (TextView)convertView.findViewById(R.id.orderIDTextView);
+            TextView textview_orderDate = (TextView)convertView.findViewById(R.id.orderDateTextView);
 
+
+
+            //Dummy Data: Change the array names here to the WebAPI's Array.
             textview_name.setText(productNameString[position]);
             textview_sku.setText(productSKUInteger[position]);
             textview_supplier.setText(supplierString[position]);
+
+            //textview_name.setText(productNameString[0]=productSKUSting);
 
 
             return convertView;
