@@ -66,6 +66,7 @@ public class SearchParameterPage extends AppCompatActivity {
             //If user enters anything
             informationTextView.setText("");
 
+            //0=Etherium, 1=Hyper Ledger, 2=Open Chain
             Intent intent = new Intent(this, SearchResultPage.class);
                 intent.putExtra(productSKUExtra, productSKU);
                 intent.putExtra(productNameExtra, productName);

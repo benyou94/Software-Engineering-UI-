@@ -87,6 +87,7 @@ public class SearchResultPage extends AppCompatActivity {
 
         //Parameter ("BlockChain Choose", ProductID, productName, supplier)
         //0=Etherium, 1=Hyper Ledger, 2=Open Chain
+        //return 0 if user enters etherium
         queryTask.execute("1", productSKUString, productNameString, supplierNameString);
     }
 
