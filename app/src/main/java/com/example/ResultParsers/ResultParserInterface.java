@@ -20,13 +20,6 @@ public interface ResultParserInterface {
     public ArrayList<Component> getParsedResults();
 
     /**
-     * Retrieves the results parsed into a list of Component objects.
-     * @return The parsed results
-     */
-//    public ArrayList<Component> getParsedComponentResults();
-
-
-    /**
      * Checks if there are results.
      * @return True of results exists; false otherwise.
      */
