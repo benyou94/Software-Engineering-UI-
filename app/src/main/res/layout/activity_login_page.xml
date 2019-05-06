@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginPage"
-    >
+    tools:context=".LoginPage">
 
 
     <EditText
@@ -79,7 +78,7 @@
 
     <TextView
         android:id="@+id/loginInformation"
-        android:layout_width="91dp"
+        android:layout_width="175dp"
         android:layout_height="55dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -89,6 +88,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.689" />
+        app:layout_constraintVertical_bias="0.669" />
+
+    <Button
+        android:id="@+id/CreateAccount"
+        android:layout_width="159dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="556dp"
+        android:text="Create Account"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
