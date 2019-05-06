@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author Lisa Chen
  */
-public class Component implements Comparable<Component>{
+public class Component implements Comparable<Component> {
     private String sku;
     private String name;
     private String supplier;
@@ -51,19 +51,19 @@ public class Component implements Comparable<Component>{
     public String getSKU() { return sku; }
 
     /**
-     * Get's the component's name.
+     * Gets the component's name.
      * @return Component's name
      */
     public String getName() { return name; }
 
     /**
-     * Get's the supplier of the component.
+     * Gets the supplier of the component.
      * @return Component's supplier
      */
     public String getSupplier() { return supplier; }
 
     /**
-     * Get's the components making up of this component.
+     * Gets the components making up of this component.
      * @return The components of this component
      */
     public ArrayList<Component> getSubComponents() { return components; }
@@ -71,21 +71,20 @@ public class Component implements Comparable<Component>{
 
     /**
      * Compares the components first by its SKU, then by name, then by supplier.
-     * @param component
-     * @return
+     * @param component The component to compare to this component object
+     * @return Negative if this object comes before compared object, positive if after, 0 if same
      */
     @Override
     public int compareTo(@NonNull Component component) {
         int skuCompare = this.sku.compareTo(component.sku);
+
         if (skuCompare == 0) {
             int nameCompare = this.name.compareTo(component.name);
-            if (nameCompare == 0) {
+
+            if (nameCompare == 0)
                 return this.supplier.compareTo(component.supplier);
-            }
-            else
-                return nameCompare;
+            return nameCompare;
         }
-        else
-            return skuCompare;
+        return skuCompare;
     }
 }
