@@ -100,17 +100,19 @@ public class QueryResultParser implements ResultParserInterface {
     private void removeDuplicateResults() {
         Collections.sort(parsedResults);
 
-        for (int i = 0; i < parsedResults.size() - 2; i++) {
-            boolean foundDup = true;
+        for (int i = 0; i < parsedResults.size() - 1; i++) {
+            boolean foundAllDups = true;
             MedProduct comp1 = (MedProduct) parsedResults.get(i);
 
-            while (foundDup) {
+            while (foundAllDups) {
                 MedProduct comp2 = (MedProduct) parsedResults.get(i+1);
 
                 if (isDuplicateResult(comp1, comp2))
                     parsedResults.remove(i+1);
+                    if (i == parsedResults.size() - 1)
+                        foundAllDups = false;
                 else
-                    foundDup = false;
+                    foundAllDups = false;
             }
         }
     }
