@@ -39,6 +39,8 @@ public class SearchResultPage extends AppCompatActivity {
     String[] productNameStringArray = {"Computer","Pokemon","Tomogachi","Jojo's Bizarre Adventure: HOLY SHIT I GOTA SHIT TON OF TEXT I GATTA REWWWEKK", "Maple Story","Weed"};
     String[] supplierStringArray = {"Sensei","Ash","Ben","GIOGIO","Nexon","Snoop Dog"};
 
+
+    //These variables are to hold the information from the search parameter variables that passed over
     String productSKUString,productNameString,supplierNameString,blockChainIDString;
 
 
@@ -48,7 +50,7 @@ public class SearchResultPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //Redirect's activityView to the called activity
-        setContentView(R.layout.activity_third);
+        setContentView(R.layout.activity_search_result_page);
 
         //Toolbar toolbar = findViewById(R.id.toolbar);
 
@@ -118,7 +120,6 @@ public class SearchResultPage extends AppCompatActivity {
             TextView textview_supplier = (TextView) convertView.findViewById((R.id.supplierTextView));
             TextView textview_orderID = (TextView)convertView.findViewById(R.id.orderIDTextView);
             TextView textview_orderDate = (TextView)convertView.findViewById(R.id.orderDateTextView);
-
 
 
             //Dummy Data: Change the array names here to the WebAPI's Array.
