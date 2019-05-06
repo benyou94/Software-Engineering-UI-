@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SearchParameterPage">
@@ -12,9 +13,10 @@
 
         <TextView
             android:id="@+id/topInfoDisplayTextView"
-            android:layout_width="338dp"
-            android:layout_height="102dp"
-            android:layout_marginStart="8dp"
+            android:layout_width="350dp"
+
+            android:layout_height="110dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
@@ -27,6 +29,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.076" />
+
+        <Spinner
+            android:id="@+id/blockChainSpinner"
+            android:layout_width="205dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/searchButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/supplierTextField"></Spinner>
 
         <Button
             android:id="@+id/searchButton"
@@ -41,58 +56,56 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/supplierTextField"
-            app:layout_constraintVertical_bias="0.8" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <EditText
             android:id="@+id/productSKUTextField"
-            android:layout_width="299dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="50dp"
             android:ems="10"
             android:hint="Product SKU"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.886"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.305" />
+            app:layout_constraintTop_toBottomOf="@+id/topInfoDisplayTextView"
+            app:layout_constraintVertical_bias="0.077" />
 
         <EditText
             android:id="@+id/productNameTextField"
-            android:layout_width="299dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="56dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:hint="Product Name"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/productSKUTextField"
-            app:layout_constraintVertical_bias="0.092" />
+            app:layout_constraintVertical_bias="0.061" />
 
         <EditText
             android:id="@+id/supplierTextField"
-            android:layout_width="299dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:ems="10"
             android:hint="Supplier"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/productNameTextField"
-            app:layout_constraintVertical_bias="0.145" />
+            app:layout_constraintTop_toBottomOf="@+id/productNameTextField" />
 
         <TextView
             android:id="@+id/infoTextView"

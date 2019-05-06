@@ -25,8 +25,9 @@ public class SearchParameterPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
+        setContentView(R.layout.activity_search_parameter_page);
 
 
         //Getting all the created buttons/textfield/textview from secondActivity and assigning them variables to do stuff.
@@ -55,13 +56,17 @@ public class SearchParameterPage extends AppCompatActivity {
 
         if (productSKU.equals("") || productName.equals("") || supplierName.equals("")){
 
+
             informationTextView.setText("Please enter the correct information for all three search fields");
 
         }
 
         else{
 
+            //If user enters anything
             informationTextView.setText("");
+
+            //0=Etherium, 1=Hyper Ledger, 2=Open Chain
             Intent intent = new Intent(this, SearchResultPage.class);
                 intent.putExtra(productSKUExtra, productSKU);
                 intent.putExtra(productNameExtra, productName);

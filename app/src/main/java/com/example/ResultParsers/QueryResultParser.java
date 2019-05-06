@@ -1,5 +1,6 @@
 package com.example.ResultParsers;
 
+import com.example.APIClientAccess.ComponentAPIClientUsage;
 import com.example.Data.Component;
 import com.example.Data.MedProduct;
 
@@ -22,12 +23,12 @@ public class QueryResultParser implements ResultParserInterface {
     ArrayList<Component> parsedResults;
     private final String PRODUCT_ID_KEY = "productID";
     private final String PRODUCT_NAME_KEY = "productName";
-    private final String SUPPLIER_KEY = "previousOwner"; //TODO verify correct and not owner
-    private final String ORDER_ID_KEY = "orderID"; //TODO update this to match API
-    private final String ORDER_DATE_KEY = "orderDate"; //TODO update this to match API
+    private final String SUPPLIER_KEY = "previousOwner";
+    private final String ORDER_ID_KEY = "orderID";
+    private final String ORDER_DATE_KEY = "transactionDate";
 
     /**
-     * Constructs the parser with the JSONArray results to parse.
+     * Constructs the parser with the JSONArray results of MedProducts to parse.
      * @param results The results in JSONArray format that needs to be parsed
      * @throws JSONException
      */
@@ -47,55 +48,80 @@ public class QueryResultParser implements ResultParserInterface {
      * @throws JSONException
      */
     private void parseResults(JSONArray results) throws JSONException {
-        if (results != null)
-        {
+        if (results != null) {
+            String[] keys = {PRODUCT_ID_KEY, PRODUCT_NAME_KEY, SUPPLIER_KEY, ORDER_ID_KEY,
+                    ORDER_DATE_KEY};
+            String[] params = new String[keys.length];
+
+            //retrieves each result from the array for parsing
             for (int i = 0; i < results.length(); i++) {
                 JSONObject result = results.getJSONObject(i);
-                //TODO need to figure out exception for when it cannot find orderID or orderDate
-                String productID = result.getString(PRODUCT_ID_KEY);
-                String productName = result.getString(PRODUCT_NAME_KEY);
-                String supplier = result.getString(SUPPLIER_KEY);
-                String orderID = result.getString(ORDER_ID_KEY);
-                String orderDate = result.getString(ORDER_DATE_KEY);
-                MedProduct newProduct = new MedProduct(productID,productName,supplier, orderID,
-                        orderDate);
+
+                //retrieves the parameter of each result to pass to MedProduct
+                for (int key = 0; key < keys.length; key++) {
+                    try {
+                        params[key] = result.getString(keys[key]);
+                    }
+                    catch (JSONException e) {
+                        params[key] = "";
+                    }
+                }
+
+                ArrayList<Component> components = getParsedComponents(params[0]);
+                MedProduct newProduct = new MedProduct(params[0],params[1],params[2], params[3],
+                        params[4], components);
+
                 parsedResults.add(newProduct);
-                //TODO need to add section to calculate creating the subcomponents
             }
             removeDuplicateResults();
         }
     }
 
+    /**
+     * Retrieves the components of the given parent (through its parent ID).
+     * @param parentID The parent ID of the product to find the subcomponents
+     * @return The parent
+     */
+    private ArrayList<Component> getParsedComponents(String parentID) throws JSONException {
+        if (parentID == null || parentID == "")
+            return null;
+
+        //TODO bring back once component section is working
+//        ComponentAPIClientUsage compAPIAccess = new ComponentAPIClientUsage();
+//        ComponentResultParser subComponentParser = new
+//                ComponentResultParser(compAPIAccess.getJSONResults(parentID));
+//
+//        return subComponentParser.getParsedResults();
+        return null;
+    }
+
+    /** Removes duplicate results from the resulting parsed results. */
     private void removeDuplicateResults() {
         Collections.sort(parsedResults);
+
         for (int i = 0; i < parsedResults.size() - 2; i++) {
             boolean foundDup = true;
             MedProduct comp1 = (MedProduct) parsedResults.get(i);
+
             while (foundDup) {
                 MedProduct comp2 = (MedProduct) parsedResults.get(i+1);
-                if (isDuplicateResult(comp1, comp2)) {
+
+                if (isDuplicateResult(comp1, comp2))
                     parsedResults.remove(i+1);
-                }
                 else
                     foundDup = false;
             }
         }
     }
 
-    private boolean isDuplicateResult(MedProduct comp1, MedProduct comp2) {
-        if (comp1.getSKU().equals(comp2.getSKU())) {
-            if (comp1.getName().equals(comp2.getName())) {
-                if (comp1.getSupplier().equals(comp2.getSupplier())) {
-                    if (comp1.getOrderID().equals(comp2.getOrderID())) {
-                        return comp1.getOrderDate().equals(comp2.getOrderDate());
-                    }
-                    return false;
-                }
-                return false;
-            }
-            return false;
-        }
-        return false;
+    /**
+     * Checks if the two given med products are the same (2nd one being duplicate of the first).
+     * @param product1 First MedProduct to compare
+     * @param product2 Second MedProduct to compare
+     * @return True if the two given products are the same; false otherwise
+     */
+    private boolean isDuplicateResult(MedProduct product1, MedProduct product2) {
+        return product1.compareTo(product2) == 0;
     }
 
     /**
@@ -103,13 +129,4 @@ public class QueryResultParser implements ResultParserInterface {
      * @return True of results exists; false otherwise.
      */
     public boolean hasResults() { return parsedResults.size() > 0; }
-
-    /**
-     * Checks if there are subcomponents of the results.
-     * @param component The component to check if there are subcomponents
-     * @return True of subcomponents exists; false otherwise.
-     */
-    public boolean hasSubResults(Component component) {
-        return component.getSubComponents() != null;
-    }
 }

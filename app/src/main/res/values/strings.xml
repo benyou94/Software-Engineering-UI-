@@ -6,4 +6,7 @@
     <string name="product_sku">Product SKU</string>
     <string name="product_name">Product Name</string>
     <string name="search_results">Search Results:</string>
+    <string name="order_id">Order ID:</string>
+    <string name="textview">TextView</string>
+    <string name="order_date">Order Date:</string>
 </resources>
