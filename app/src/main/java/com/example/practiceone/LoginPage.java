@@ -88,21 +88,4 @@ public class LoginPage extends AppCompatActivity {
 
     }
 
-    /*/create account page
-    Button createAccount = findViewById(R.id.CreateAccount);
-    createAccount.setOnClickListener(new View.OnClickListener()){
-        public void onClick(View v){
-            openCreateAccount();
-        }
-    }
-
-    public void openCreateAccount(){
-        Intent intent = new Intent (this, CreateAccount.class );
-        startActivity(intent);
-
-    }
-    */
-
-
-
 }
