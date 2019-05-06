@@ -2,124 +2,119 @@
     "status": "ok",
     "data": [
         {
-            "parentSKU": 0,
-            "componentSKU": 1,
-            "Supplier": "Vermont_Medical_Supply",
-            "Name": "Xanax-1"
+            "productID": 1,
+            "previousOwner": "Vermont_Medical_Supply",
+            "productName": "Xanax-1"
         },
         {
-            "parentSKU": 0,
-            "componentSKU": 2,
-            "Supplier": "Pico_Medical_Supply",
-            "Name": "Xanax-1"
+            "productID": 2,
+            "previousOwner": "Pico_Medical_Supply",
+            "productName": "Xanax-1"
         },
         {
-            "parentSKU": 0,
-            "componentSKU": 3,
-            "Supplier": "Pomona_Medical_Supply",
-            "Name": "Xanax-1"
+            "productID": 3,
+            "previousOwner": "Pomona_Medical_Supply",
+            "productName": "Xanax-1"
         },
         {
-            "parentSKU": 0,
-            "componentSKU": 4,
-            "Supplier": "Hometown_Medical_Supply",
-            "Name": "Xanax-2"
+            "productID": 4,
+            "previousOwner": "Hometown_Medical_Supply",
+            "productName": "Xanax-2"
         },
         {
-            "parentSKU": 1,
-            "componentSKU": 1,
-            "Supplier": "Hometown_Medical_Supply",
-            "Name": "Morphine-1"
+            "productID": 1,
+            "previousOwner": "Hometown_Medical_Supply",
+            "productName": "Morphine-1"
         },
         {
             "parentSKU": 1,
-            "componentSKU": 2,
-            "Supplier": "Hometown_Medical_Supply",
-            "Name": "Morphine-2"
+            "productID": 2,
+            "previousOwner": "Hometown_Medical_Supply",
+            "productName": "Morphine-2"
         },
         {
             "parentSKU": 1,
-            "componentSKU": 3,
-            "Supplier": "Pomona_Medical_Supply",
-            "Name": "Morphine-1"
+            "productID": 3,
+            "previousOwner": "Pomona_Medical_Supply",
+            "productName": "Morphine-1"
         },
         {
             "parentSKU": 1,
-            "componentSKU": 4,
-            "Supplier": "Pico_Medical_Supply",
-            "Name": "Morphine-1"
+            "productID": 4,
+            "previousOwner": "Pico_Medical_Supply",
+            "productName": "Morphine-1"
         },
         {
             "parentSKU": 2,
-            "componentSKU": 1,
-            "Supplier": "Pico_Medical_Supply",
-            "Name": "Aspirin-1"
+            "productID": 1,
+            "previousOwner": "Pico_Medical_Supply",
+            "productName": "Aspirin-1"
         },
         {
             "parentSKU": 2,
-            "componentSKU": 2,
-            "Supplier": "Vermont_Medical_Supply",
-            "Name": "Aspirin-2"
+            "productID": 2,
+            "previousOwner": "Vermont_Medical_Supply",
+            "productName": "Aspirin-2"
         },
         {
             "parentSKU": 2,
-            "componentSKU": 3,
-            "Supplier": "Torrance_Medical_Supply",
-            "Name": "Aspirin-2"
+            "productID": 3,
+            "previousOwner": "Torrance_Medical_Supply",
+            "productName": "Aspirin-2"
         },
         {
             "parentSKU": 2,
-            "componentSKU": 4,
-            "Supplier": "Gardena_Medical_Supply",
-            "Name": "Aspirin-1"
+            "productID": 4,
+            "previousOwner": "Gardena_Medical_Supply",
+            "productName": "Aspirin-1"
         },
         {
             "parentSKU": 3,
-            "componentSKU": 1,
-            "Supplier": "Pico_Medical_Supply",
-            "Name": "Hydrocodone-1"
+            "productID": 1,
+            "previousOwner": "Pico_Medical_Supply",
+            "productName": "Hydrocodone-1"
         },
         {
             "parentSKU": 3,
-            "componentSKU": 2,
-            "Supplier": "Torrance_Medical_Supply",
-            "Name": "Hydrocodone-1"
+            "productID": 2,
+            "previousOwner": "Torrance_Medical_Supply",
+            "productName": "Hydrocodone-1"
         },
         {
             "parentSKU": 3,
-            "componentSKU": 3,
-            "Supplier": "Compton_Medical_Supply",
-            "Name": "Hydrocodone-1"
+            "productID": 3,
+            "previousOwner": "Compton_Medical_Supply",
+            "productName": "Hydrocodone-1"
         },
         {
             "parentSKU": 3,
-            "componentSKU": 4,
-            "Supplier": "Compton_Medical_Supply",
-            "Name": "Hydrocodone-2"
+            "productID": 4,
+            "previousOwner": "Compton_Medical_Supply",
+            "productName": "Hydrocodone-2"
         },
         {
             "parentSKU": 4,
-            "componentSKU": 1,
-            "Supplier": "Compton_Medical_Supply",
-            "Name": "Acetaminophen-2"
+            "productID": 1,
+            "previousOwner": "Compton_Medical_Supply",
+            "productName": "Acetaminophen-2"
         },
         {
             "parentSKU": 4,
-            "componentSKU": 2,
-            "Supplier": "Pico_Medical_Supply",
-            "Name": "Acetaminophen-2"
+            "productID": 2,
+            "previousOwner": "Pico_Medical_Supply",
+            "productName": "Acetaminophen-2"
         },
         {
             "parentSKU": 4,
-            "componentSKU": 3,
-            "Supplier": "Pomona_Medical_Supply",
-            "Name": "Acetaminophen-1"
+            "productID": 3,
+            "previousOwner": "Pomona_Medical_Supply",
+            "productName": "Acetaminophen-1"
         },
         {
             "parentSKU": 4,
-            "componentSKU": 4,
-            "Supplier": "Torrance_Medical_Supply",
-            "Name": "Acetaminophen-1"
+            "productID": 4,
+            "previousOwner": "Torrance_Medical_Supply",
+            "productName": "Acetaminophen-1"
         }
     ]
 }
