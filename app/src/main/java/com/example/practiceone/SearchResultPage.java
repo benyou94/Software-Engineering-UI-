@@ -5,14 +5,20 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import com.example.APIClientAccess.MedDeviceAPIClientUsage;
+import com.example.APIClientAccess.BlockChainQueryAPIClientUsage;
+import com.example.Data.Component;
+import com.example.Data.MedProduct;
+import com.example.ResultParsers.QueryResultParser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -21,38 +27,65 @@ import java.util.ArrayList;
  * @author Lisa Chen and Ben You
  */
 public class SearchResultPage extends AppCompatActivity {
+
     private SearchTask queryTask;
     private final String LOADING_DIALOG_TEXT = "Loading Results. Please wait.";
     private ArrayAdapter arrayAdapter;
     ListView listview;
 
-    int[] productSKUInteger = {0,1,2,3,4,5};
 
-    String[] productNameString = {"Computer","Pokemon","Tomogachi","Jojo's Bizarre Adventure", "Maple Story","Weed"};
+    //Dummy test data. Change it to the API later.
+    String[] productSKUInteger = {"0000000000000000000000","11111111111111111111112222222222222222222222222222222222222222","2","3","4","5"};
+    String[] productNameString = {"Computer","Pokemon","Tomogachi","Jojo's Bizarre Adventure: HOLY SHIT I GOTA SHIT TON OF TEXT I GATTA REWWWEKK", "Maple Story","Weed"};
     String[] supplierString = {"Sensei","Ash","Ben","GIOGIO","Nexon","Snoop Dog"};
+
+    String productSKUSting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        //Redirect's activityView to the called activity
         setContentView(R.layout.activity_third);
+
         //Toolbar toolbar = findViewById(R.id.toolbar);
+
+        //Changes the actionbar Title
+        getSupportActionBar().setTitle("Search Results:");
 
         //Gets the search results from activity two
         Intent intent = getIntent();
 
-        String productSKUSting = intent.getStringExtra(SearchParameterPage.productSKUExtra);
+        //This line should get the information from the variable in the second activity.
+        productSKUSting = intent.getStringExtra(SearchParameterPage.productSKUExtra);
 
-        //Gets the listview from activity_third
+
+        //Gets the listview from searchresultpage
         listview = (ListView)findViewById(R.id.listView);
+
+
+        //Creates a customAdapter (custom listview) for the listview
+        CustomAdapter customAdapter = new CustomAdapter();
+
+        //sets the listview to the custom adapter
+        listview.setAdapter(customAdapter);
     }
 
     @Override
     protected void onResume() {
+
         super.onResume();
         queryTask = new SearchTask();
-        queryTask.execute("1"); //TODO change for actual parameters from UI
+
+
+
+        //Parameter ("BlockChain Choose", ProductID, productName, supplier)
+        //0=Etherium, 1=Hyper Ledger, 2=Open Chain
+        queryTask.execute("1", null, null, null);
     }
 
+    //CustomAdapter for the custom ListView Display
     class CustomAdapter extends BaseAdapter{
 
         @Override
@@ -72,7 +105,28 @@ public class SearchResultPage extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return null;
+
+            //Creating a view and creating variables to grab data and store them in
+            convertView = getLayoutInflater().inflate(R.layout.listview_detail,null);
+
+            //This assigns the listview_detail's TextViews into a variable we can display
+            TextView textview_name = (TextView) convertView.findViewById((R.id.productNameTextView));
+            TextView textview_sku =  (TextView) convertView.findViewById(R.id.productSKUTextView);
+            TextView textview_supplier = (TextView) convertView.findViewById((R.id.supplierTextView));
+            TextView textview_orderID = (TextView)convertView.findViewById(R.id.orderIDTextView);
+            TextView textview_orderDate = (TextView)convertView.findViewById(R.id.orderDateTextView);
+
+
+
+            //Dummy Data: Change the array names here to the WebAPI's Array.
+            textview_name.setText(productNameString[position]);
+            textview_sku.setText(productSKUInteger[position]);
+            textview_supplier.setText(supplierString[position]);
+
+            //textview_name.setText(productNameString[0]=productSKUSting);
+
+
+            return convertView;
         }
     }
 
@@ -105,13 +159,27 @@ public class SearchResultPage extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            //TODO changed for JSON return and multiple parameters passed
             try {
-                MedDeviceAPIClientUsage clientUser = new MedDeviceAPIClientUsage();
+                BlockChainQueryAPIClientUsage clientUser = new BlockChainQueryAPIClientUsage();
+                JSONArray results = clientUser.getJSONResults(params[0], params[1],params[2],
+                        params[3]);
+                QueryResultParser queryParser = new QueryResultParser(results);
+                ArrayList<Component> productResults = queryParser.getParsedResults();
+                for (Component c : productResults) {
+                    MedProduct product = (MedProduct) c;
+                    Log.d("LisaComponent", "Name: " + c.getName() + ", SKU: " + c.getSKU() +
+                            ", Supplier: " + c.getSupplier() + ", OrderID: " + product.getOrderID() +
+                            ", OrderDate: " + product.getOrderDate());
+                }
                 if (isCancelled())
                     return null;
-                return clientUser.getQueryID((params[0])); //TODO do not pass queryID
-            } catch (JSONException | InterruptedException e) {
+                String queryID = null;
+                while (queryID == null) {
+                    queryID = clientUser.getQueryID();
+                }
+
+                return queryID; //TODO do not pass queryID
+            } catch (JSONException e) {
                 return "Unable to retrieve data. Parameters may be invalid.";
             }
         }
@@ -132,13 +200,13 @@ public class SearchResultPage extends AppCompatActivity {
          * @param result The result from the query search
          */
         private void populateSearchResults(String result) {
-            //TODO change for JSON results
-            ArrayList<String> results = new ArrayList<>();
-            results.add(""); //TODO fix layout so this line is not needed
-            results.add("Query ID: " + result);
-            arrayAdapter = new ArrayAdapter(SearchResultPage.this,
-                    android.R.layout.simple_list_item_1, results);
-            listview.setAdapter(arrayAdapter);
+//            TODO change for JSON results
+//            ArrayList<String> results = new ArrayList<>();
+//            results.add(""); //TODO fix layout so this line is not needed
+//            results.add("Query ID: " + result);
+//            arrayAdapter = new ArrayAdapter(SearchResultPage.this,
+//                    android.R.layout.simple_list_item_1, results);
+//            listview.setAdapter(arrayAdapter);
         }
 
         /** To set up the loading dialog seen by the user. */

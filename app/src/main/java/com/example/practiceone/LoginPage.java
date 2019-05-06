@@ -56,11 +56,6 @@ public class LoginPage extends AppCompatActivity {
 
     }
 
-    public void open2(){
-        Intent intent = new Intent(this, SearchParameterPage.class);
-        startActivity(intent);
-
-    }
 
     private void checkIDPWInfo(String userID, String userPassword){
 

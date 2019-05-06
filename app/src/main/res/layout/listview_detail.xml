@@ -1,46 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+
+    >
 
     <TextView
         android:id="@+id/productNameTextView"
-        android:layout_width="209dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="46dp"
-        android:layout_marginEnd="171dp"
-        android:layout_marginBottom="648dp"
-        android:text="Product Name"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/product_name"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/productSKUTextView"
-        android:layout_width="224dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/productNameTextView"
+        android:layout_below="@+id/productNameTextView"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="49dp"
-        android:layout_marginEnd="135dp"
-        android:layout_marginBottom="570dp"
-        android:text="Product SKU" />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+
+        android:text="@string/product_sku"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/supplierTextView"
-        android:layout_width="226dp"
-        android:layout_height="61dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/productSKUTextView"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="54dp"
-        android:layout_marginEnd="131dp"
-        android:layout_marginBottom="494dp"
-        android:text="Supplier name" />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/supplier_name"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/orderIDTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/supplierTextView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+
+        android:text="@string/order_id"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/orderDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/orderIDTextView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/order_date"
+        android:textSize="18sp" />
 
 </RelativeLayout>
