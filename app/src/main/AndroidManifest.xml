@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.practiceone">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -9,17 +10,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.AppCompat">
+        <activity android:name=".SearchResultsExpandedPage"></activity>
         <activity
             android:name=".SearchResultPage"
-            android:label="@string/title_activity_third"
-
-            android:parentActivityName=".SearchParameterPage"/>
+            android:parentActivityName=".SearchParameterPage" />
         <activity
             android:name=".SearchParameterPage"
-            android:label="@string/title_activity_second"
             android:theme="@style/NoActionBar" /> <!-- this line removes the titlebar -->
-        <activity android:name=".LoginPage">
+        <activity
+            android:name=".LoginPage"
+            android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
