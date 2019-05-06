@@ -16,21 +16,13 @@ import java.util.Collections;
 /**
  * <b><u>CS 4800 Class Project: Medical Devices Data with Blockchain</b></u>
  * <br>
- * This is the class representing the result parser for the results of the user's query. This
- * takes the results (in JSONArray format) and creates MedProduct objects to represent the results.
- *
- * @author JIN KIM
- */
-
-/**
- * <b><u>CS 4800 Class Project: Medical Devices Data with Blockchain</b></u>
- * <br>
  * This is the class representing the result parser for the results of the components of a given
  * parent product (which can take the form of MedProduct or Component). This takes the results
  * (in JSONArray format) and creates Component objects to represent the results.
  *
  * @author Lisa Chen and Jin Kim
  */
+
 public class ComponentResultParser implements ResultParserInterface {
     ArrayList<Component> parsedResults;
     //TODO update to match whatever the API sets the keys to for querying against database
@@ -44,7 +36,8 @@ public class ComponentResultParser implements ResultParserInterface {
      * @throws JSONException
      */
     public ComponentResultParser(JSONArray results) throws JSONException {
-        //TODO complete this section!!!!
+        parsedResults = new ArrayList<>();
+        parseResults(results);
         /*
         implement parseResults() and getParsedComponents() - similar to QueryResultParser
         Note: this uses Component class, so all you need to save is Product ID, product name, supplier
@@ -76,40 +69,7 @@ public class ComponentResultParser implements ResultParserInterface {
                 parsedResults.add(newComponent);
                 //TODO need to add section to calculate creating the subcomponents
             }
-            removeDuplicateResults();
         }
-    }
-
-    private void removeDuplicateResults() {
-        Collections.sort(parsedResults);
-        for (int i = 0; i < parsedResults.size() - 2; i++) {
-            boolean foundDup = true;
-            MedProduct comp1 = (MedProduct) parsedResults.get(i);
-            while (foundDup) {
-                MedProduct comp2 = (MedProduct) parsedResults.get(i+1);
-                if (isDuplicateResult(comp1, comp2)) {
-                    parsedResults.remove(i+1);
-                }
-                else
-                    foundDup = false;
-            }
-        }
-    }
-
-    private boolean isDuplicateResult(MedProduct comp1, MedProduct comp2) {
-        if (comp1.getSKU().equals(comp2.getSKU())) {
-            if (comp1.getName().equals(comp2.getName())) {
-                if (comp1.getSupplier().equals(comp2.getSupplier())) {
-                    if (comp1.getOrderID().equals(comp2.getOrderID())) {
-                        return comp1.getOrderDate().equals(comp2.getOrderDate());
-                    }
-                    return false;
-                }
-                return false;
-            }
-            return false;
-        }
-        return false;
     }
 
     /**
