@@ -50,15 +50,6 @@ public class ComponentResultParser implements ResultParserInterface {
         Note: this uses Component class, so all you need to save is Product ID, product name, supplier
          */
     }
-    /**
-     * Constructs the parser with the JSONArray results to parse.
-     * @param results The results in JSONArray format that needs to be parsed
-     * @throws JSONException
-     */
-    public ComponentResultParser(JSONArray results) throws JSONException {
-        parsedResults = new ArrayList<>();
-        parseResults(results);
-    }
 
     public ArrayList<Component> getParsedComponentResults() { return parsedResults; }
 
