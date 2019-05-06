@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * @author Laura Campos and Ben You
+ */
 
 public class LoginPage extends AppCompatActivity {
 

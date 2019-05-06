@@ -8,6 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * @author Laura Campos and Ben You
+ */
+
 public class CreateAccount extends AppCompatActivity {
     private EditText userName;
     private EditText userPassword;

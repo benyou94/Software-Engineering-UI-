@@ -24,7 +24,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 /**
- * @author Lisa Chen and Ben You
+ * @author Lisa Chen and Ben You and Laura Campos
  */
 public class SearchResultPage extends AppCompatActivity {
 
