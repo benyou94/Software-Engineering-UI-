@@ -36,6 +36,7 @@ public class QueryResultParser implements ResultParserInterface {
         parsedResults = new ArrayList<>();
         parseResults(results);
     }
+
     /**
      * Retrieves the results parsed into a list of Component objects.
      * @return The parsed results
@@ -80,13 +81,13 @@ public class QueryResultParser implements ResultParserInterface {
     /**
      * Retrieves the components of the given parent (through its parent ID).
      * @param parentID The parent ID of the product to find the subcomponents
-     * @return The parent
+     * @return A list of the parent's components
      */
     private ArrayList<Component> getParsedComponents(String parentID) throws JSONException {
         if (parentID == null || parentID == "")
             return null;
 
-        //TODO bring back once component section is working
+        //TODO bring back once component API access section is working (remove return null)
 //        ComponentAPIClientUsage compAPIAccess = new ComponentAPIClientUsage();
 //        ComponentResultParser subComponentParser = new
 //                ComponentResultParser(compAPIAccess.getJSONResults(parentID));
