@@ -86,11 +86,13 @@ public class QueryResultParser implements ResultParserInterface {
         if (parentID == null || parentID == "")
             return null;
 
-        ComponentAPIClientUsage compAPIAccess = new ComponentAPIClientUsage();
-        ComponentResultParser subComponentParser = new
-                ComponentResultParser(compAPIAccess.getJSONResults(parentID));
-
-        return subComponentParser.getParsedResults();
+        //TODO bring back once component section is working
+//        ComponentAPIClientUsage compAPIAccess = new ComponentAPIClientUsage();
+//        ComponentResultParser subComponentParser = new
+//                ComponentResultParser(compAPIAccess.getJSONResults(parentID));
+//
+//        return subComponentParser.getParsedResults();
+        return null;
     }
 
     /** Removes duplicate results from the resulting parsed results. */
