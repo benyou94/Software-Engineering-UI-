@@ -23,7 +23,7 @@ public class LoginPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login_page);
 
         //Gets the details from the UI and puts them into the variables.
         Name = (EditText)findViewById(R.id.loginName);
