@@ -44,6 +44,11 @@ public class SearchResultPage extends AppCompatActivity {
     String productSKUString,productNameString,supplierNameString,blockChainIDString;
 
 
+    //Creating Arraylists to hold the data from the API.
+    ArrayList<String> productNameArrayList = new ArrayList<String>();
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -127,6 +132,9 @@ public class SearchResultPage extends AppCompatActivity {
             textview_sku.setText(productSKUStringArray[position]);
             textview_supplier.setText(supplierStringArray[position]);
 
+            System.out.println("String Array contents: " +productNameStringArray[position] + " position#: " +position);
+            //System.out.println("--ArayList stuff: " +productNameArrayList.get(position));
+
             //textview_name.setText(productNameString[0]=productSKUSting);
 
 
@@ -169,11 +177,16 @@ public class SearchResultPage extends AppCompatActivity {
                         params[3]);
                 QueryResultParser queryParser = new QueryResultParser(results);
                 ArrayList<Component> productResults = queryParser.getParsedResults();
+                int i =0;
                 for (Component c : productResults) {
                     MedProduct product = (MedProduct) c;
                     Log.d("LisaComponent", "Name: " + c.getName() + ", SKU: " + c.getSKU() +
                             ", Supplier: " + c.getSupplier() + ", OrderID: " + product.getOrderID() +
                             ", OrderDate: " + product.getOrderDate());
+                    productNameArrayList.add(c.getName());
+
+                    System.out.println("Arraylist: " +productNameArrayList.get(i));
+                    i++;
                 }
                 if (isCancelled())
                     return null;
