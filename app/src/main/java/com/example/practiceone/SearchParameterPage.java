@@ -54,12 +54,17 @@ public class SearchParameterPage extends AppCompatActivity {
     public void searchInfo(String productSKU, String productName, String supplierName){
 
         if (productSKU.equals("") || productName.equals("") || supplierName.equals("")){
+
+
             informationTextView.setText("Please enter the correct information for all three search fields");
+
         }
 
         else{
 
+            //If user enters anything
             informationTextView.setText("");
+
             Intent intent = new Intent(this, SearchResultPage.class);
                 intent.putExtra(productSKUExtra, productSKU);
                 intent.putExtra(productNameExtra, productName);
