@@ -35,11 +35,12 @@ public class SearchResultPage extends AppCompatActivity {
 
 
     //Dummy test data. Change it to the API later.
-    String[] productSKUInteger = {"0000000000000000000000","11111111111111111111112222222222222222222222222222222222222222","2","3","4","5"};
-    String[] productNameString = {"Computer","Pokemon","Tomogachi","Jojo's Bizarre Adventure: HOLY SHIT I GOTA SHIT TON OF TEXT I GATTA REWWWEKK", "Maple Story","Weed"};
-    String[] supplierString = {"Sensei","Ash","Ben","GIOGIO","Nexon","Snoop Dog"};
+    String[] productSKUStringArray = {"0000000000000000000000","11111111111111111111112222222222222222222222222222222222222222","2","3","4","5"};
+    String[] productNameStringArray = {"Computer","Pokemon","Tomogachi","Jojo's Bizarre Adventure: HOLY SHIT I GOTA SHIT TON OF TEXT I GATTA REWWWEKK", "Maple Story","Weed"};
+    String[] supplierStringArray = {"Sensei","Ash","Ben","GIOGIO","Nexon","Snoop Dog"};
 
-    String productSKUSting;
+    String productSKUString,productNameString,supplierNameString,blockChainIDString;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,9 @@ public class SearchResultPage extends AppCompatActivity {
         Intent intent = getIntent();
 
         //This line should get the information from the variable in the second activity.
-        productSKUSting = intent.getStringExtra(SearchParameterPage.productSKUExtra);
+        productSKUString = intent.getStringExtra(SearchParameterPage.productSKUExtra);
+        productNameString = intent.getStringExtra(SearchParameterPage.productNameExtra);
+        supplierNameString = intent.getStringExtra(SearchParameterPage.supplierExtra);
 
 
         //Gets the listview from searchresultpage
@@ -82,7 +85,7 @@ public class SearchResultPage extends AppCompatActivity {
 
         //Parameter ("BlockChain Choose", ProductID, productName, supplier)
         //0=Etherium, 1=Hyper Ledger, 2=Open Chain
-        queryTask.execute("1", null, null, null);
+        queryTask.execute("1", productSKUString, productNameString, supplierNameString);
     }
 
     //CustomAdapter for the custom ListView Display
@@ -90,7 +93,7 @@ public class SearchResultPage extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return productSKUInteger.length;
+            return productSKUStringArray.length;
         }
 
         @Override
@@ -119,9 +122,9 @@ public class SearchResultPage extends AppCompatActivity {
 
 
             //Dummy Data: Change the array names here to the WebAPI's Array.
-            textview_name.setText(productNameString[position]);
-            textview_sku.setText(productSKUInteger[position]);
-            textview_supplier.setText(supplierString[position]);
+            textview_name.setText(productNameStringArray[position]);
+            textview_sku.setText(productSKUStringArray[position]);
+            textview_supplier.setText(supplierStringArray[position]);
 
             //textview_name.setText(productNameString[0]=productSKUSting);
 
