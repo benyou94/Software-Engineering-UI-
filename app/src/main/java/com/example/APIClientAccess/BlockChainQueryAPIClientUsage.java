@@ -4,7 +4,6 @@ import android.util.Log;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import org.json.*;
-import java.util.HashMap;
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -17,8 +16,6 @@ import cz.msebera.android.httpclient.Header;
  * https://blockchain-restful-api.herokuapp.com/documentation
  *
  * Code created based on reference: https://loopj.com/android-async-http/
- *
- * TODO Need to update methods based on class diagram
  *
  * @author Lisa Chen and Johnson Wei
  */
@@ -38,7 +35,6 @@ public class BlockChainQueryAPIClientUsage {
     /**
      * FOR DEBUGGING AND TESTING PURPOSES ONLY. CALL THIS ONLY AFTER getJSONResults().
      * @return A queryID needed to get the results from the web API
-     * @throws JSONException
      */
     public String getQueryID() {
         //if null, getJSONResults() was not called or did not complete its task
@@ -56,11 +52,11 @@ public class BlockChainQueryAPIClientUsage {
      * @param productID This is the ID for the product you are trying to find
      * @param productName This is the name of the product you are trying to find
      * @param supplier This is the supplier of the product you are trying to find
-     * @return The results in a JSONArray
-     * @throws JSONException
+     * @return The data from the API as a JSONArray
      */
     public JSONArray getJSONResults(String blockchainID, String productID, String productName,
-                                    String supplier) throws JSONException {
+                                    String supplier) {
+
         initializeQueryID(populatePOSTParams(blockchainID, productID, productName, supplier));
 
         //wait until queryID is available
@@ -77,9 +73,8 @@ public class BlockChainQueryAPIClientUsage {
      * Initialize a new queryID as given from the web API. Parameters are sent through POST to
      * the web API, which gives back a queryID that is used to get the results through GET.
      * @param postParams The parameters posted to the web API
-     * @throws JSONException
      */
-    private void initializeQueryID(final RequestParams postParams) throws JSONException {
+    private void initializeQueryID(final RequestParams postParams) {
         MedDeviceAPIClient.post(QUERY_ACCESS_URL,postParams,new JsonHttpResponseHandler() {
 
             @Override
@@ -89,6 +84,7 @@ public class BlockChainQueryAPIClientUsage {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.d("Error", "Unable to retrieve queryID from API");
+                    queryID = "Error";
                 }
             }
             //should be unused method for debugging
@@ -96,16 +92,17 @@ public class BlockChainQueryAPIClientUsage {
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 Log.d("Error", "Somehow accessed onSuccess() method with a JSONArray " +
                         "result for post");
+                queryID = "Error";
             }
         });
     }
 
     /**
-     * Initializes an JSONarray with the data attained from the API through GET.
-     * @params getParam The parameters needed to access GET in the API
+     * Initializes an JSONArray with the data attained from the API through GET.
+     * @params getParams The parameters needed to access GET in the API
      */
-    public void initializeDataArray(final RequestParams getParam) {
-        MedDeviceAPIClient.get(QUERY_ACCESS_URL,getParam, new JsonHttpResponseHandler() {
+    public void initializeDataArray(final RequestParams getParams) {
+        MedDeviceAPIClient.get(QUERY_ACCESS_URL,getParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
@@ -113,6 +110,7 @@ public class BlockChainQueryAPIClientUsage {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.d("Error", "Cannot initialize blockchain data with given params");
+                    data_array = null;
                 }
             }
             //should be unused method for debugging
@@ -120,6 +118,7 @@ public class BlockChainQueryAPIClientUsage {
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 Log.d("Error", "Somehow accessed onSuccess() method with a JSONArray " +
                         "result for post");
+                data_array = null;
             }
         });
     }
@@ -133,18 +132,17 @@ public class BlockChainQueryAPIClientUsage {
      * @return The list of params to post to API
      */
     private RequestParams populatePOSTParams(String blockchainID, String productID,
-                                             String productName, String supplier)
-    {
-//        HashMap<String, String> hashParams = new HashMap<String, String>();
-//        hashParams.put(BLOCKCHAIN_PARAM, blockchainID);
-//        return new RequestParams(hashParams);
+                                             String productName, String supplier) {
+
         RequestParams postParam = new RequestParams();
         String[] inputs = {blockchainID, productID, productName, supplier};
         String[] keys = {BLOCKCHAIN_KEY, PRODUCT_ID_KEY, PRODUCT_NAME_KEY, SUPPLIER_KEY};
+
         for (int i = 0; i < inputs.length; i++) {
             if (!(inputs[i] == null && inputs[i] == ""))
                 postParam.add(keys[i], inputs[i]);
         }
+
         return postParam;
     }
 
@@ -157,6 +155,5 @@ public class BlockChainQueryAPIClientUsage {
         RequestParams getParam = new RequestParams();
         getParam.add(QUERY_ID_KEY, queryID);
         return getParam;
-
     }
 }
