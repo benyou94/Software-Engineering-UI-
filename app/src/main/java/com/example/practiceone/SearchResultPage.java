@@ -80,9 +80,7 @@ public class SearchResultPage extends AppCompatActivity {
         supplierNameString = intent.getStringExtra(SearchParameterPage.supplierExtra);
 
 
-        //TODO Lisa Test here
-
-            //need to pass context (you can only retrieve during onCreate
+            //need to pass context (you can only retrieve during onCreate)
             context = getApplicationContext();
 
             ArrayList<Component> queryData = TestDataGenerator.getQueryData(context);
@@ -100,9 +98,6 @@ public class SearchResultPage extends AppCompatActivity {
                 }
 
             }
-
-
-        //TODO Lisa Test ENDS here
 
         //Gets the listview from searchresultpage
         listview = (ListView)findViewById(R.id.listView);
@@ -250,8 +245,6 @@ public class SearchResultPage extends AppCompatActivity {
                 QueryResultParser queryParser = new QueryResultParser(results);
                 productAPIResults = queryParser.getParsedResults();
                 asyncTaskDone = true;
-                //Ben: This code here should print out the JSON in console. Need to manipulate this data to display it in this page.
-                //Need this block of code to run first before UI's onCreate method. so that I can grab the data and display it.
 //                for (Component c : productAPIResults) {
 //                    MedProduct product = (MedProduct) c;
 //                    Log.d("LisaAPIConnectionTest", "Name: " + c.getName() + ", SKU: " +
@@ -278,7 +271,6 @@ public class SearchResultPage extends AppCompatActivity {
             } catch (JSONException e) {
                 return "Unable to retrieve data. Parameters may be invalid.";
             }
-
         }
 
         /**
@@ -289,7 +281,6 @@ public class SearchResultPage extends AppCompatActivity {
         protected void onPostExecute(String result) {
             populateSearchResults(result);
             loadingBar.dismiss();
-
         }
 
         /**
@@ -315,8 +306,4 @@ public class SearchResultPage extends AppCompatActivity {
             loadingBar.show();
         }
     }
-
-
-
-
 }

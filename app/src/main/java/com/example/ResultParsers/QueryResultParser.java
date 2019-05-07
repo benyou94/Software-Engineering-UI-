@@ -68,13 +68,19 @@ public class QueryResultParser implements ResultParserInterface {
                     }
                 }
 
-                ArrayList<Component> components = getParsedComponents(params[0]);
+//                ArrayList<Component> components = getParsedComponents(params[0]);
+//                MedProduct newProduct = new MedProduct(params[0],params[1],params[2], params[3],
+//                        params[4], components);
+
                 MedProduct newProduct = new MedProduct(params[0],params[1],params[2], params[3],
-                        params[4], components);
+                        params[4]);
 
                 parsedResults.add(newProduct);
             }
+            //must sort before removing duplicate results and adding subcomponents
+            Collections.sort(parsedResults);
             removeDuplicateResults();
+            addComponents();
         }
     }
 
@@ -96,9 +102,8 @@ public class QueryResultParser implements ResultParserInterface {
         return null;
     }
 
-    /** Removes duplicate results from the resulting parsed results. */
+    /** Removes duplicate results from the resulting SORTED parsed results. */
     private void removeDuplicateResults() {
-        Collections.sort(parsedResults);
 
         for (int i = 0; i < parsedResults.size() - 1; i++) {
             boolean foundAllDups = true;
@@ -115,6 +120,44 @@ public class QueryResultParser implements ResultParserInterface {
                     foundAllDups = false;
             }
         }
+    }
+
+    /** Adds the subcomponents of the given SORTED list of parent Components. */
+    private void addComponents() {
+        ArrayList<Component> components = null;
+        Component prevParent = parsedResults.get(0);
+
+        try { components = getParsedComponents(prevParent.getSKU()); }
+        catch (JSONException e) { }
+        finally { prevParent.setComponents(components); }
+
+        for (int i = 1; i < parsedResults.size(); i++) {
+            Component currentParent = parsedResults.get(i);
+
+            //not a unique parent, so different components
+            if (!areEquivalentParents(prevParent, currentParent)) {
+                prevParent = currentParent;
+
+                try {
+                    components = getParsedComponents(currentParent.getSKU());
+                } catch (JSONException e) {
+                    components = null;
+                }
+            }
+            currentParent.setComponents(components);
+        }
+    }
+
+    /**
+     * Checks if the parents are considered equivalent (and therefore would have the same list of
+     * Component children.
+     * @param parent1 The first parent to compare
+     * @param parent2 The second parent to compare
+     * @return True if the parents are equivalent; false otherwise
+     */
+    private boolean areEquivalentParents(Component parent1, Component parent2) {
+        //TODO update based on what API considers equivalent parents (depends on database impl)
+        return parent1.getSKU().equals(parent2.getSKU());
     }
 
     /**
