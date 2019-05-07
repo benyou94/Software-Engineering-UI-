@@ -33,8 +33,10 @@ public class SearchResultPage extends AppCompatActivity {
     private SearchTask queryTask;
     private final String LOADING_DIALOG_TEXT = "Loading Results. Please wait.";
     private ArrayAdapter arrayAdapter;
+    private ArrayList<Component> productAPIResults;
     ListView listview;
     Context context;
+    boolean asyncTaskDone = false;
 
 
     //Dummy test data1. can remove once we get the official data.
@@ -87,29 +89,19 @@ public class SearchResultPage extends AppCompatActivity {
             ArrayList<Component> componentData = TestDataGenerator.getComponentData(context);
 
             if (queryData != null) {
-                for (Component item : queryData) {
-                    MedProduct prod = (MedProduct) item;
-                    Log.d("LisaUnitTest", "Name: " + prod.getName() + ", ProductID: " +
-                            prod.getSKU() + ",Supplier: " + prod.getSupplier() + ", OrderID " +
-                            prod.getOrderID() + ",Order Data: " + prod.getOrderDate());
-
-                    //Grabs the data and puts it into the arrayList.
-                    productNameArrayList.add(prod.getName());
-                    productIDArrayList.add(prod.getSKU());
-                    supplierNameArrayList.add(prod.getSupplier());
-                    orderIDArrayList.add(prod.getOrderID());
-                    orderDateArrayList.add(prod.getOrderDate());
-
-                }
+                populateScreenArray(queryData);
             }
 
             if (componentData != null) {
                 for (Component item : componentData) {
                     Log.d("LisaUnitTest", "Name: " + item.getName() + ", ProductID: " +
                             item.getSKU() + ",Supplier: " + item.getSupplier());
+                    //TODO this is for component data - a different screen
                 }
 
             }
+
+
         //TODO Lisa Test ENDS here
 
         //Gets the listview from searchresultpage
@@ -123,6 +115,23 @@ public class SearchResultPage extends AppCompatActivity {
         listview.setAdapter(customAdapter);
     }
 
+    /**
+     * Populates the array that is displayed onto the UI with the MedProduct data.
+     * @param data The data to display
+     */
+    private void populateScreenArray(ArrayList<Component> data) {
+        for (Component item : data) {
+            MedProduct prod = (MedProduct) item;
+
+            //Grabs the data and puts it into the arrayList.
+            productNameArrayList.add(prod.getName());
+            productIDArrayList.add(prod.getSKU());
+            supplierNameArrayList.add(prod.getSupplier());
+            orderIDArrayList.add(prod.getOrderID());
+            orderDateArrayList.add(prod.getOrderDate());
+        }
+    }
+
     @Override
     protected void onResume() {
 
@@ -134,7 +143,14 @@ public class SearchResultPage extends AppCompatActivity {
         //Need to implement a Spinner to get data from activity 2 (searchparameter)
         //0=Etherium, 1=Hyper Ledger, 2=Open Chain
         //return 0 if user enters etherium
+        //TODO you still need to pass the blockchain reference from the dropdown
         queryTask.execute("1", productSKUString, productNameString, supplierNameString);
+
+        //don't populate data until it is complete
+        while (!asyncTaskDone);
+
+        if (productAPIResults != null)
+            populateScreenArray(productAPIResults);
     }
 
     //CustomAdapter for the custom ListView Display (these methods are generated automatically to handle the custom ListView)
@@ -199,6 +215,7 @@ public class SearchResultPage extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            asyncTaskDone = false;
             setupLoadingDialog();
         }
         /**
@@ -223,25 +240,25 @@ public class SearchResultPage extends AppCompatActivity {
                 JSONArray results = clientUser.getJSONResults(params[0], params[1],params[2],
                         params[3]);
                 QueryResultParser queryParser = new QueryResultParser(results);
-                ArrayList<Component> productResults = queryParser.getParsedResults();
-
+                productAPIResults = queryParser.getParsedResults();
+                asyncTaskDone = true;
                 //Ben: This code here should print out the JSON in console. Need to manipulate this data to display it in this page.
                 //Need this block of code to run first before UI's onCreate method. so that I can grab the data and display it.
-                for (Component c : productResults) {
-                    MedProduct product = (MedProduct) c;
-                    Log.d("LisaAPIConnectionTest", "Name: " + c.getName() + ", SKU: " +
-                            c.getSKU() + ", Supplier: " + c.getSupplier() + ", OrderID: " +
-                            product.getOrderID() + ", OrderDate: " + product.getOrderDate());
-
-                    /*
-                    String getNameString;
-                    getNameString = c.getName();
-                    productNameArrayList.add(getNameString);
-
-                    System.out.println("(===) Arraylist: " +productNameArrayList.get(i));
-                    i++;
-                    */
-                }
+//                for (Component c : productAPIResults) {
+//                    MedProduct product = (MedProduct) c;
+//                    Log.d("LisaAPIConnectionTest", "Name: " + c.getName() + ", SKU: " +
+//                            c.getSKU() + ", Supplier: " + c.getSupplier() + ", OrderID: " +
+//                            product.getOrderID() + ", OrderDate: " + product.getOrderDate());
+//
+//                    /*
+//                    String getNameString;
+//                    getNameString = c.getName();
+//                    productNameArrayList.add(getNameString);
+//
+//                    System.out.println("(===) Arraylist: " +productNameArrayList.get(i));
+//                    i++;
+//                    */
+//                }
                 if (isCancelled())
                     return null;
                 String queryID = null;
