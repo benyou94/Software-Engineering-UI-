@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
-        <activity android:name=".SearchResultsExpandedPage"></activity>
+        <activity
+            android:name=".SearchResultsExpandedPage"
+            android:parentActivityName=".SearchResultPage"
+            android:noHistory="true"></activity>
         <activity
             android:name=".SearchResultPage"
             android:parentActivityName=".SearchParameterPage" />

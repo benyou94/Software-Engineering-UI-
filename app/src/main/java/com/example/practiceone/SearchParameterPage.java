@@ -4,9 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchParameterPage extends AppCompatActivity {
 
@@ -21,6 +27,7 @@ public class SearchParameterPage extends AppCompatActivity {
     public static String productNameExtra = "com.example.practiceone.example.productNameExtra";
     public static String supplierExtra = "com.example.practiceone.example.supplierExtra";
 
+    ArrayList<String> blockChainDropList = new ArrayList<String>();
 
 
     @Override
@@ -37,7 +44,6 @@ public class SearchParameterPage extends AppCompatActivity {
         searchingButtion = (Button)findViewById(R.id.searchButton);
         informationTextView = (TextView)findViewById(R.id.infoTextView);
 
-
         //Login ButtonListener.
         searchingButtion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +51,35 @@ public class SearchParameterPage extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
                 searchInfo(productSKUString.getText().toString(), productNameString.getText().toString(),supplierString.getText().toString());
 
+
+            }
+        });
+
+        //Dropdown List
+        //0=Etherium, 1=Hyper Ledger, 2=Open Chain
+        blockChainDropList.add("Etherium");
+        blockChainDropList.add("Hyper Ledger");
+        blockChainDropList.add("Open Chain");
+
+        Spinner blockChainSpinners = findViewById(R.id.blockChainSpinner);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, blockChainDropList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        blockChainSpinners.setAdapter(adapter);
+
+        blockChainSpinners.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                String itemvalue = parent.getItemAtPosition(position).toString();
+
+                System.out.println(itemvalue+" was selected! | position: " +position);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
