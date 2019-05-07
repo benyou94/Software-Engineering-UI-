@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -37,7 +38,7 @@ public class SearchResultPage extends AppCompatActivity {
     Context context;
 
 
-    //Dummy test data1. can remove once we get the official data.
+    //Dummy data test 1. can remove once we get the official data.
     String[] productSKUStringArray = {"0000000000000000000000","11111111111111111111112222222222222222222222222222222222222222","2","3","4","5"};
     String[] productNameStringArray = {"Computer","Pokemon","Tomogachi","Jojo's Bizarre Adventure: HOLY SHIT I GOTA SHIT TON OF TEXT I GATTA REWWWEKK", "Maple Story","Weed"};
     String[] supplierStringArray = {"Sensei","Ash","Ben","GIOGIO","Nexon","Snoop Dog"};
@@ -45,7 +46,6 @@ public class SearchResultPage extends AppCompatActivity {
 
     //These variables are to hold the information from the search parameter variables that passed over
     String productSKUString,productNameString,supplierNameString,blockChainIDString;
-
 
     //Creating Arraylists to hold the data from the API.
     ArrayList<String> productNameArrayList = new ArrayList<String>();
@@ -121,6 +121,14 @@ public class SearchResultPage extends AppCompatActivity {
 
         //sets the listview to the custom adapter
         listview.setAdapter(customAdapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), SearchResultsExpandedPage.class);
+                startActivityForResult(intent,position);
+            }
+        });
     }
 
     @Override
