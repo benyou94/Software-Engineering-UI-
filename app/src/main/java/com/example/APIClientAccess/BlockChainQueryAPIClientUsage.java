@@ -143,7 +143,7 @@ public class BlockChainQueryAPIClientUsage {
             if (!(inputs[i] == null && inputs[i] == ""))
                 postParam.add(keys[i], inputs[i]);
         }
-
+        Log.d("LisaTestPOSTParams", postParam.toString());
         return postParam;
     }
 
