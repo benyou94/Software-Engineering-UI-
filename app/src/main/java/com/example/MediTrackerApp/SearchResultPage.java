@@ -7,6 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.APIClientAccess.BlockChainQueryAPIClientUsage;
 import com.example.Data.Component;
@@ -337,5 +341,45 @@ public class SearchResultPage extends AppCompatActivity {
             loadingBar.setMessage("\t" + LOADING_DIALOG_TEXT);
             loadingBar.show();
         }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflated = getMenuInflater();
+        inflated.inflate(R.menu.menu3dot, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.logout:
+                Toast.makeText(this,"Logging Out", Toast.LENGTH_SHORT);
+                finish();
+                openLogin();
+                return true;
+
+            case R.id.goBack:
+                Toast.makeText(this,"Returning", Toast.LENGTH_SHORT);
+                openSearchResults();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    public void openLogin(){
+        Intent intent = new Intent(this, LoginPage.class);
+        startActivity(intent);
+        finish();
+    }
+    //function to return to previous page
+    public void openSearchResults(){
+        Intent intent = new Intent(this, SearchParameterPage.class);
+        startActivity(intent);
+        finish();
+
     }
 }
