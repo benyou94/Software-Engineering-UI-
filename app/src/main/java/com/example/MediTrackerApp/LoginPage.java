@@ -89,6 +89,7 @@ public class LoginPage extends AppCompatActivity {
         Intent intent = new Intent (this, CreateAccount.class );
         startActivity(intent);
 
+
     }
 
 }
