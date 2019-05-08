@@ -98,11 +98,12 @@ public class SearchResultPage extends AppCompatActivity {
             //Component Data: store component stuff here and pass it to page 4. (searchresultexpanded)
             if (componentData != null) {
                 for (Component item : componentData) {
-                    Log.d("LisaUnitTest", "Name: " + item.getName() + ", ProductID: " +
+                    /*Log.d("LisaUnitTest", "Name: " + item.getName() + ", ProductID: " +
                             item.getSKU() + ",Supplier: " + item.getSupplier());
+                            */
                     //TODO this is for component data - a different screen
 
-                    //System.out.println("===== Component NamE: " +item.getName()+" | ProductID: " +item.getSKU());
+                    System.out.println("===== Component Name: " +item.getName()+" | ProductID: " +item.getSKU()+ " | Supplier: " +item.getSupplier());
 
 
                 }
@@ -119,14 +120,20 @@ public class SearchResultPage extends AppCompatActivity {
         //sets the listview to the custom adapter
         listview.setAdapter(customAdapter);
 
-        //ItemClicker for ListView: When clicked, it will go to the next activity.
+
+        //(!) ItemClicker for ListView: When clicked, it will go to the next activity.
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                //Creates intent
                 Intent intent = new Intent(view.getContext(), SearchResultsExpandedPage.class);
 
+                //(!) This will pass the data to the next activity.
                 intent.putExtra("passProductName", productNameArrayList.get(position));
+                intent.putExtra("passProductSKUName", productIDArrayList.get(position));
+                intent.putExtra("passSupplierName",supplierNameArrayList.get(position));
+
 
                 //Starts the SearchResultsExpanded Activity.
                 startActivityForResult(intent,position);
@@ -141,6 +148,8 @@ public class SearchResultPage extends AppCompatActivity {
     private void populateScreenArray(ArrayList<Component> data) {
         for (Component item : data) {
             MedProduct prod = (MedProduct) item;
+
+            System.out.println("==Product Name: " +prod.getName()+" | productID: " +prod.getSKU());
 
             //Grabs the data and puts it into the arrayList.
             productNameArrayList.add(prod.getName());
@@ -163,6 +172,7 @@ public class SearchResultPage extends AppCompatActivity {
         //Need to implement a Spinner to get data from activity 2 (searchparameter)
         //0=Etherium, 1=Hyper Ledger, 2=Open Chain
         //return 0 if user enters etherium
+
         //TODO you still need to pass the blockchain reference from the dropdown
         //queryTask.execute("0", productSKUString, productNameString, supplierNameString);
 
