@@ -1,4 +1,4 @@
-package com.example.practiceone;
+package com.example.MediTrackerApp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

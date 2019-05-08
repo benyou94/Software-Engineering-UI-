@@ -1,9 +1,7 @@
-package com.example.practiceone;
+package com.example.MediTrackerApp;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 public class SearchResultsExpandedPage extends AppCompatActivity {
 
@@ -15,7 +13,8 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
 
         //Changes the actionbar Title, and add a backbutton for this page.
         getSupportActionBar().setTitle("Search Results Expanded:");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
     }

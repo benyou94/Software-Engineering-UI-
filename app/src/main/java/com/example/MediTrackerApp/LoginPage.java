@@ -1,4 +1,4 @@
-package com.example.practiceone;
+package com.example.MediTrackerApp;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
