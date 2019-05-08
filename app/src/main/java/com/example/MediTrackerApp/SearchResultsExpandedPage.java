@@ -52,9 +52,14 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
         //TODO: (2) Maybe need to pass the arraylist of the Component page to here and display it.
         //TODO: (3) Will need to replace the productname/SKU/Supplier if they continue to click on it. (
         //              Use stack on the arraylist like if arraylist is empty then gtfo.
+
+
+
+
+
+        //Laura -->
         //TODO: (4) Create a top-right menu bar that guides the user back to the search area. (will need to dispose data?)
         //TODO: (5) OPTIONAL: add a logout button or some shit.
-
 
     }
 

@@ -19,6 +19,7 @@ import com.example.APIClientAccess.BlockChainQueryAPIClientUsage;
 import com.example.Data.Component;
 import com.example.Data.MedProduct;
 import com.example.ResultParsers.QueryResultParser;
+import com.example.UnitTesting.ComponentTestGenerator;
 import com.example.UnitTesting.TestDataGenerator;
 
 import org.json.JSONArray;
@@ -90,6 +91,9 @@ public class SearchResultPage extends AppCompatActivity {
             ArrayList<Component> queryData = TestDataGenerator.getQueryData(context);
             ArrayList<Component> componentData = TestDataGenerator.getComponentData(context);
 
+            ComponentTestGenerator test = new ComponentTestGenerator();
+            ArrayList<Component> testSamples = test.getTestProducts();
+
             //SearchResultPage itemlist populate
             if (queryData != null) {
                 populateScreenArray(queryData);
@@ -145,6 +149,7 @@ public class SearchResultPage extends AppCompatActivity {
      * Populates the array that is displayed onto the UI with the MedProduct data.
      * @param data The data to display
      */
+    //Product/SKU/Suppl;ier/OrderDate Data
     private void populateScreenArray(ArrayList<Component> data) {
         for (Component item : data) {
             MedProduct prod = (MedProduct) item;
