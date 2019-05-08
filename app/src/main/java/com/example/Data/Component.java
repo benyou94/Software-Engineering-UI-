@@ -44,6 +44,13 @@ public class Component implements Comparable<Component> {
         this.components = components;
     }
 
+
+    /**
+     * Sets the subcomponents of this Component object.
+     * @param components The subcomponents making up this Component object
+     */
+    public void setComponents(ArrayList<Component> components) { this.components = components; }
+
     /**
      * Gets the component's SKU or ID.
      * @return Component's SKU or ID

@@ -1,4 +1,4 @@
-package com.example.practiceone;
+package com.example.MediTrackerApp;
 
 import org.junit.Test;
 

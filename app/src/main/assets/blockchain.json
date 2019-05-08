@@ -1,0 +1,137 @@
+{
+    "status": "ok",
+    "data": [
+        {
+            "productID": "6",
+            "productName": "xanax",
+            "owner": "Yasuo",
+            "previousOwner": "Annie",
+            "quantity": "120",
+            "pricePerUnit": "2",
+            "totalPrice": "6",
+            "orderID": "5984320",
+            "transactionDate": "05/02/2019"
+        },
+        {
+            "productID": "1",
+            "productName": "morphine",
+            "owner": "Annie",
+            "previousOwner": "Bard",
+            "quantity": "55",
+            "pricePerUnit": "4",
+            "totalPrice": "12",
+            "orderID": "1254314",
+            "transactionDate": "02/12/2019"
+        },
+        {
+            "productID": "2",
+            "productName": "aspirin",
+            "owner": "Bard",
+            "previousOwner": "Amumu",
+            "quantity": "85",
+            "pricePerUnit": "1.50",
+            "totalPrice": "4.50",
+            "orderID": "5342323",
+            "transactionDate": "11/24/2018"
+        },
+        {
+            "productID": "3",
+            "productName": "hydrocodone",
+            "owner": "Amumu",
+            "previousOwner": "Annie",
+            "quantity": "230",
+            "pricePerUnit": "5",
+            "totalPrice": "15",
+            "orderID": "3234142",
+            "transactionDate": "07/12/2018"
+        },
+        {
+            "productID": "4",
+            "productName": "acetaminophen",
+            "owner": "Annie",
+            "previousOwner": "Amumu",
+            "quantity": "170",
+            "pricePerUnit": "4",
+            "totalPrice": "12",
+            "orderID": "6324135",
+            "transactionDate": "06/30/2018"
+        },
+        {
+            "productID": "notdupbuthassomematchinginfotest",
+            "productName": "acetaminophen",
+            "owner": "Annie",
+            "previousOwner": "Amumu",
+            "quantity": "170",
+            "pricePerUnit": "4",
+            "totalPrice": "12",
+            "orderID": "6324135",
+            "transactionDate": "06/30/2018"
+        },
+        {
+            "productID": "notdupbuthassomematchinginfotest",
+            "productName": "acetaminophen",
+            "owner": "Annie",
+            "previousOwner": "Amumu",
+            "quantity": "170",
+            "pricePerUnit": "4",
+            "totalPrice": "12",
+            "orderID": "6324135",
+            "transactionDate": "05/30/2018"
+        },
+        {
+            "productID": "notdupbuthassomematchinginfotest",
+            "productName": "acetaminophen",
+            "owner": "Annie",
+            "previousOwner": "Amumu",
+            "quantity": "170",
+            "pricePerUnit": "4",
+            "totalPrice": "12",
+            "orderID": "6324132",
+            "transactionDate": "06/30/2018"
+        },
+        {
+            "productID": "notdupbuthassomematchinginfotest",
+            "productName": "acetaminophen2",
+            "owner": "Annie",
+            "previousOwner": "Amumu",
+            "quantity": "170",
+            "pricePerUnit": "4",
+            "totalPrice": "12",
+            "orderID": "6324135",
+            "transactionDate": "06/30/2018"
+        },
+        {
+            "productID": "notdupbuthassomematchinginfotest",
+            "productName": "acetaminophen",
+            "owner": "Annie",
+            "previousOwner": "Amumu2",
+            "quantity": "170",
+            "pricePerUnit": "4",
+            "totalPrice": "12",
+            "orderID": "6324135",
+            "transactionDate": "06/30/2018"
+        },
+        {
+            "productID": "dupItem with super long name to testing purposes because why not it's fun isn't it",
+            "productName": "DuplicateNameThatIsSuperLongWithNoSpacesBecauseWhyNotLet'sTryToBreakEverything",
+            "owner": "DupOwner",
+            "previousOwner": "DupSupplierThatIsSuperLongWithNoSpacesBecauseWhyNotLet'sTryToBreakEverything",
+            "quantity": "1700000",
+            "pricePerUnit": "4000000",
+            "totalPrice": "12",
+            "orderID": "SUPERLONG111000000000000000000000000",
+            "transactionDate": "05/06/2019"
+        },
+        {
+            "productID": "dupItem with super long name to testing purposes because why not it's fun isn't it",
+            "productName": "DuplicateNameThatIsSuperLongWithNoSpacesBecauseWhyNotLet'sTryToBreakEverything",
+            "owner": "DupOwner",
+            "previousOwner": "DupSupplierThatIsSuperLongWithNoSpacesBecauseWhyNotLet'sTryToBreakEverything",
+            "quantity": "17",
+            "pricePerUnit": "4000000",
+            "totalPrice": "12",
+            "orderID": "SUPERLONG111000000000000000000000000",
+            "transactionDate": "05/06/2019"
+        }
+    ]
+}

@@ -1,6 +1,7 @@
-package com.example.practiceone;
+package com.example.MediTrackerApp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -17,6 +19,7 @@ import com.example.APIClientAccess.BlockChainQueryAPIClientUsage;
 import com.example.Data.Component;
 import com.example.Data.MedProduct;
 import com.example.ResultParsers.QueryResultParser;
+import com.example.UnitTesting.TestDataGenerator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,10 +34,13 @@ public class SearchResultPage extends AppCompatActivity {
     private SearchTask queryTask;
     private final String LOADING_DIALOG_TEXT = "Loading Results. Please wait.";
     private ArrayAdapter arrayAdapter;
+    private ArrayList<Component> productAPIResults;
     ListView listview;
+    Context context;
+    boolean asyncTaskDone = false;
 
 
-    //Dummy test data. Change it to the API later.
+    //Dummy data test 1. can remove once we get the official data.
     String[] productSKUStringArray = {"0000000000000000000000","11111111111111111111112222222222222222222222222222222222222222","2","3","4","5"};
     String[] productNameStringArray = {"Computer","Pokemon","Tomogachi","Jojo's Bizarre Adventure: HOLY SHIT I GOTA SHIT TON OF TEXT I GATTA REWWWEKK", "Maple Story","Weed"};
     String[] supplierStringArray = {"Sensei","Ash","Ben","GIOGIO","Nexon","Snoop Dog"};
@@ -43,12 +49,18 @@ public class SearchResultPage extends AppCompatActivity {
     //These variables are to hold the information from the search parameter variables that passed over
     String productSKUString,productNameString,supplierNameString,blockChainIDString;
 
-
     //Creating Arraylists to hold the data from the API.
     ArrayList<String> productNameArrayList = new ArrayList<String>();
+    ArrayList<String> productIDArrayList = new ArrayList<String>();
+    ArrayList<String> supplierNameArrayList = new ArrayList<String>();
+    ArrayList<String> orderIDArrayList = new ArrayList<String>();
+    ArrayList<String> orderDateArrayList = new ArrayList<String>();
+
+    //Component Data: Creating Arraylist to hold/pass data to the next page.
 
 
 
+    //Local Data JSON, created for temp use.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -71,6 +83,32 @@ public class SearchResultPage extends AppCompatActivity {
         supplierNameString = intent.getStringExtra(SearchParameterPage.supplierExtra);
 
 
+            //need to pass context (you can only retrieve during onCreate)
+            context = getApplicationContext();
+
+            // (!) Component Data
+            ArrayList<Component> queryData = TestDataGenerator.getQueryData(context);
+            ArrayList<Component> componentData = TestDataGenerator.getComponentData(context);
+
+            //SearchResultPage itemlist populate
+            if (queryData != null) {
+                populateScreenArray(queryData);
+            }
+
+            //Component Data: store component stuff here and pass it to page 4. (searchresultexpanded)
+            if (componentData != null) {
+                for (Component item : componentData) {
+                    Log.d("LisaUnitTest", "Name: " + item.getName() + ", ProductID: " +
+                            item.getSKU() + ",Supplier: " + item.getSupplier());
+                    //TODO this is for component data - a different screen
+
+                    //System.out.println("===== Component NamE: " +item.getName()+" | ProductID: " +item.getSKU());
+
+
+                }
+
+            }
+
         //Gets the listview from searchresultpage
         listview = (ListView)findViewById(R.id.listView);
 
@@ -80,7 +118,40 @@ public class SearchResultPage extends AppCompatActivity {
 
         //sets the listview to the custom adapter
         listview.setAdapter(customAdapter);
+
+        //ItemClicker for ListView: When clicked, it will go to the next activity.
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(view.getContext(), SearchResultsExpandedPage.class);
+
+                intent.putExtra("passProductName", productNameArrayList.get(position));
+
+                //Starts the SearchResultsExpanded Activity.
+                startActivityForResult(intent,position);
+            }
+        });
     }
+
+    /**
+     * Populates the array that is displayed onto the UI with the MedProduct data.
+     * @param data The data to display
+     */
+    private void populateScreenArray(ArrayList<Component> data) {
+        for (Component item : data) {
+            MedProduct prod = (MedProduct) item;
+
+            //Grabs the data and puts it into the arrayList.
+            productNameArrayList.add(prod.getName());
+            productIDArrayList.add(prod.getSKU());
+            supplierNameArrayList.add(prod.getSupplier());
+            orderIDArrayList.add(prod.getOrderID());
+            orderDateArrayList.add(prod.getOrderDate());
+        }
+    }
+
+
 
     @Override
     protected void onResume() {
@@ -88,20 +159,27 @@ public class SearchResultPage extends AppCompatActivity {
         super.onResume();
         queryTask = new SearchTask();
 
-
-
         //Parameter ("BlockChain Choose", ProductID, productName, supplier)
+        //Need to implement a Spinner to get data from activity 2 (searchparameter)
         //0=Etherium, 1=Hyper Ledger, 2=Open Chain
         //return 0 if user enters etherium
-        queryTask.execute("1", productSKUString, productNameString, supplierNameString);
+        //TODO you still need to pass the blockchain reference from the dropdown
+        //queryTask.execute("0", productSKUString, productNameString, supplierNameString);
+
+        //don't populate data until it is complete
+        //while (!asyncTaskDone);
+
+        if (productAPIResults != null)
+            populateScreenArray(productAPIResults);
     }
 
-    //CustomAdapter for the custom ListView Display
+    //CustomAdapter for the custom ListView Display (these methods are generated automatically to handle the custom ListView)
     class CustomAdapter extends BaseAdapter{
 
         @Override
         public int getCount() {
-            return productSKUStringArray.length;
+            //dunno what this does. forgot about it :P -Ben
+            return productNameArrayList.size();
         }
 
         @Override
@@ -114,6 +192,7 @@ public class SearchResultPage extends AppCompatActivity {
             return 0;
         }
 
+        //The "View" method essentially displays all the data out, customized listview.
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -129,12 +208,15 @@ public class SearchResultPage extends AppCompatActivity {
 
 
             //Dummy Data: Change the array names here to the WebAPI's Array.
-            textview_name.setText(productNameStringArray[position]);
-            textview_sku.setText(productSKUStringArray[position]);
-            textview_supplier.setText(supplierStringArray[position]);
+            //This also prints in the UI (SearchResultsPage) to accurately display data.
+            textview_name.setText("Product Name: " +productNameArrayList.get(position));
+            textview_sku.setText("Product SKU/ID: " +productIDArrayList.get(position));
+            textview_supplier.setText("Supplier Name: " +supplierNameArrayList.get(position));
+            textview_orderID.setText("Order ID: " +orderIDArrayList.get(position));
+            textview_orderDate.setText("Order Date: " +orderDateArrayList.get(position));
 
-            System.out.println("String Array contents: " +productNameStringArray[position] + " position#: " +position);
-            //System.out.println("--ArayList stuff: " +productNameArrayList.get(position));
+            //System.out.println("String Array contents: " +productNameStringArray[position] + " | position#: " +position);
+            //System.out.println("--ArayList stuff: "  + productNameArrayList.get(position)+" | arraylistContents: " +productNameArrayList.size());
 
             //textview_name.setText(productNameString[0]=productSKUSting);
 
@@ -153,6 +235,7 @@ public class SearchResultPage extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            asyncTaskDone = false;
             setupLoadingDialog();
         }
         /**
@@ -177,18 +260,23 @@ public class SearchResultPage extends AppCompatActivity {
                 JSONArray results = clientUser.getJSONResults(params[0], params[1],params[2],
                         params[3]);
                 QueryResultParser queryParser = new QueryResultParser(results);
-                ArrayList<Component> productResults = queryParser.getParsedResults();
-                int i =0;
-                for (Component c : productResults) {
-                    MedProduct product = (MedProduct) c;
-                    Log.d("LisaComponent", "Name: " + c.getName() + ", SKU: " + c.getSKU() +
-                            ", Supplier: " + c.getSupplier() + ", OrderID: " + product.getOrderID() +
-                            ", OrderDate: " + product.getOrderDate());
-                    productNameArrayList.add(c.getName());
-
-                    System.out.println("Arraylist: " +productNameArrayList.get(i));
-                    i++;
-                }
+                productAPIResults = queryParser.getParsedResults();
+                asyncTaskDone = true;
+//                for (Component c : productAPIResults) {
+//                    MedProduct product = (MedProduct) c;
+//                    Log.d("LisaAPIConnectionTest", "Name: " + c.getName() + ", SKU: " +
+//                            c.getSKU() + ", Supplier: " + c.getSupplier() + ", OrderID: " +
+//                            product.getOrderID() + ", OrderDate: " + product.getOrderDate());
+//
+//                    /*
+//                    String getNameString;
+//                    getNameString = c.getName();
+//                    productNameArrayList.add(getNameString);
+//
+//                    System.out.println("(===) Arraylist: " +productNameArrayList.get(i));
+//                    i++;
+//                    */
+//                }
                 if (isCancelled())
                     return null;
                 String queryID = null;
@@ -210,7 +298,6 @@ public class SearchResultPage extends AppCompatActivity {
         protected void onPostExecute(String result) {
             populateSearchResults(result);
             loadingBar.dismiss();
-
         }
 
         /**
@@ -236,8 +323,4 @@ public class SearchResultPage extends AppCompatActivity {
             loadingBar.show();
         }
     }
-
-
-
-
 }

@@ -12,6 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="20dp"
         android:text="@string/product_name"
         android:textSize="18sp" />
@@ -24,6 +25,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="30dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="15dp"
 
         android:text="@string/product_sku"
@@ -37,6 +39,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="30dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="15dp"
         android:text="@string/supplier_name"
         android:textSize="18sp" />
@@ -49,6 +52,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="30dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="15dp"
 
         android:text="@string/order_id"
@@ -62,6 +66,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="30dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="20dp"
         android:text="@string/order_date"

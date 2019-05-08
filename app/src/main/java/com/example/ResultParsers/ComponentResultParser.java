@@ -1,17 +1,13 @@
 package com.example.ResultParsers;
 
+import com.example.APIClientAccess.ComponentAPIClientUsage;
 import com.example.Data.Component;
-import com.example.Data.MedProduct;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * <b><u>CS 4800 Class Project: Medical Devices Data with Blockchain</b></u>
@@ -38,20 +34,27 @@ public class ComponentResultParser implements ResultParserInterface {
     public ComponentResultParser(JSONArray results) throws JSONException {
         parsedResults = new ArrayList<>();
         parseResults(results);
-        /*
-        implement parseResults() and getParsedComponents() - similar to QueryResultParser
-        Note: this uses Component class, so all you need to save is Product ID, product name, supplier
-         */
     }
 
-    public ArrayList<Component> getParsedComponentResults() { return parsedResults; }
+    /**
+     * Retrieves the results parsed into a list of Component objects.
+     *
+     * @return The parsed results
+     */
+    @Override
+    public ArrayList<Component> getParsedResults() { return parsedResults; }
 
-
+    /**
+     * Parses the JSON results into Component objects.
+     * @param results The results in JSONArray format
+     * @throws JSONException
+     */
     private void parseResults(JSONArray results) throws JSONException {
         if (results != null) {
             String[] keys = {PRODUCT_ID_KEY, PRODUCT_NAME_KEY, SUPPLIER_KEY};
             String[] params = new String[keys.length];
-            //retrieves each result
+
+            //retrieves each result from the array for parsing
             for (int i = 0; i < results.length(); i++) {
                 JSONObject result = results.getJSONObject(i);
 
@@ -65,6 +68,7 @@ public class ComponentResultParser implements ResultParserInterface {
                     }
                 }
 
+                ArrayList<Component> components = getParsedComponents(params[0]);
                 Component newComponent = new Component(params[0],params[1],params[2]);
                 parsedResults.add(newComponent);
                 //TODO need to add section to calculate creating the subcomponents
@@ -73,12 +77,22 @@ public class ComponentResultParser implements ResultParserInterface {
     }
 
     /**
-     * Retrieves the results parsed into a list of Component objects.
-     *
-     * @return The parsed results
+     * Retrieves the components of the given parent (through its parent ID).
+     * @param parentID The parent ID of the component to find the subcomponents
+     * @return A list of the parent's components
      */
-    @Override
-    public ArrayList<Component> getParsedResults() { return parsedResults; }
+    private ArrayList<Component> getParsedComponents(String parentID) throws JSONException {
+        if (parentID == null || parentID == "")
+            return null;
+
+        //TODO bring back once component API access section is working (remove return null)
+//        ComponentAPIClientUsage compAPIAccess = new ComponentAPIClientUsage();
+//        ComponentResultParser subComponentParser = new
+//                ComponentResultParser(compAPIAccess.getJSONResults(parentID));
+//
+//        return subComponentParser.getParsedResults();
+        return null;
+    }
 
     /**
      * Checks if there are results.
