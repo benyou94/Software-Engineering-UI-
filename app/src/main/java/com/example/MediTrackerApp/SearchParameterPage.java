@@ -1,4 +1,4 @@
-package com.example.practiceone;
+package com.example.MediTrackerApp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchParameterPage extends AppCompatActivity {
 
@@ -23,9 +22,9 @@ public class SearchParameterPage extends AppCompatActivity {
     private Button searchingButtion; //Button for button.
     private TextView informationTextView;
 
-    public static String productSKUExtra = "com.example.practiceone.example.productSKUExtra";
-    public static String productNameExtra = "com.example.practiceone.example.productNameExtra";
-    public static String supplierExtra = "com.example.practiceone.example.supplierExtra";
+    public static String productSKUExtra = "com.example.MediTrackerApp.example.productSKUExtra";
+    public static String productNameExtra = "com.example.MediTrackerApp.example.productNameExtra";
+    public static String supplierExtra = "com.example.MediTrackerApp.example.supplierExtra";
 
     ArrayList<String> blockChainDropList = new ArrayList<String>();
 

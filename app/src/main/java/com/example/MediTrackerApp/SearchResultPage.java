@@ -1,4 +1,4 @@
-package com.example.practiceone;
+package com.example.MediTrackerApp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -56,6 +56,9 @@ public class SearchResultPage extends AppCompatActivity {
     ArrayList<String> orderIDArrayList = new ArrayList<String>();
     ArrayList<String> orderDateArrayList = new ArrayList<String>();
 
+    //Component Data: Creating Arraylist to hold/pass data to the next page.
+
+
 
     //Local Data JSON, created for temp use.
     @Override
@@ -83,18 +86,25 @@ public class SearchResultPage extends AppCompatActivity {
             //need to pass context (you can only retrieve during onCreate)
             context = getApplicationContext();
 
+            // (!) Component Data
             ArrayList<Component> queryData = TestDataGenerator.getQueryData(context);
             ArrayList<Component> componentData = TestDataGenerator.getComponentData(context);
 
+            //SearchResultPage itemlist populate
             if (queryData != null) {
                 populateScreenArray(queryData);
             }
 
+            //Component Data: store component stuff here and pass it to page 4. (searchresultexpanded)
             if (componentData != null) {
                 for (Component item : componentData) {
                     Log.d("LisaUnitTest", "Name: " + item.getName() + ", ProductID: " +
                             item.getSKU() + ",Supplier: " + item.getSupplier());
                     //TODO this is for component data - a different screen
+
+                    //System.out.println("===== Component NamE: " +item.getName()+" | ProductID: " +item.getSKU());
+
+
                 }
 
             }
@@ -109,10 +119,16 @@ public class SearchResultPage extends AppCompatActivity {
         //sets the listview to the custom adapter
         listview.setAdapter(customAdapter);
 
+        //ItemClicker for ListView: When clicked, it will go to the next activity.
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Intent intent = new Intent(view.getContext(), SearchResultsExpandedPage.class);
+
+                intent.putExtra("passProductName", productNameArrayList.get(position));
+
+                //Starts the SearchResultsExpanded Activity.
                 startActivityForResult(intent,position);
             }
         });
@@ -135,22 +151,23 @@ public class SearchResultPage extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     protected void onResume() {
 
         super.onResume();
         queryTask = new SearchTask();
 
-
         //Parameter ("BlockChain Choose", ProductID, productName, supplier)
         //Need to implement a Spinner to get data from activity 2 (searchparameter)
         //0=Etherium, 1=Hyper Ledger, 2=Open Chain
         //return 0 if user enters etherium
         //TODO you still need to pass the blockchain reference from the dropdown
-        queryTask.execute("1", productSKUString, productNameString, supplierNameString);
+        //queryTask.execute("0", productSKUString, productNameString, supplierNameString);
 
         //don't populate data until it is complete
-        while (!asyncTaskDone);
+        //while (!asyncTaskDone);
 
         if (productAPIResults != null)
             populateScreenArray(productAPIResults);
@@ -199,7 +216,7 @@ public class SearchResultPage extends AppCompatActivity {
             textview_orderDate.setText("Order Date: " +orderDateArrayList.get(position));
 
             //System.out.println("String Array contents: " +productNameStringArray[position] + " | position#: " +position);
-            System.out.println("--ArayList stuff: "  + productNameArrayList.get(position)+" | arraylistContents: " +productNameArrayList.size());
+            //System.out.println("--ArayList stuff: "  + productNameArrayList.get(position)+" | arraylistContents: " +productNameArrayList.size());
 
             //textview_name.setText(productNameString[0]=productSKUSting);
 
