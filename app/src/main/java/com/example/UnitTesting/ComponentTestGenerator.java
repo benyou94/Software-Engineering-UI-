@@ -7,11 +7,16 @@ import java.util.ArrayList;
 
 public class ComponentTestGenerator {
     private MedProduct alcBottle;
-    public ComponentTestGenerator() { }
+    private MedProduct ben;
+
+    public ComponentTestGenerator() {
+        createProductsAndSubComponents();
+    }
 
     public ArrayList<Component> getTestProducts() {
         ArrayList<Component> testSamples = new ArrayList<>();
         testSamples.add(alcBottle);
+        testSamples.add(ben);
         return testSamples;
     }
 
