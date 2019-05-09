@@ -1,8 +1,14 @@
 package com.example.MediTrackerApp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -18,6 +24,8 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
     String resultExpandedSupplierString;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -28,6 +36,10 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
         //Changes the actionbar Title, and add a backbutton for this page.
         getSupportActionBar().setTitle("Search Results Expanded:");
             //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //Toolbar myToolbar =(Toolbar)findViewById(R.id.my_toolbar);
+        //setSupportActionBar(myToolbar);
+
+
 
 
         //This grabs the product name, sku, supplier from searchResultPage and assigns them into a global variable we created.
@@ -57,12 +69,48 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
 
 
 
-        //Laura -->
-        //TODO: (4) Create a top-right menu bar that guides the user back to the search area. (will need to dispose data?)
-        //TODO: (5) OPTIONAL: add a logout button or some shit.
 
     }
+    //Laura -->
+    //TODO: (4) Create a top-right menu bar that guides the user back to the search area. (will need to dispose data?)
+    //TODO: (5) OPTIONAL: add a logout button or some shit.
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflated = getMenuInflater();
+        inflated.inflate(R.menu.menu3dot, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.logout:
+                Toast.makeText(this,"Logging Out", Toast.LENGTH_SHORT);
+                finish();
+                openLogin();
+                return true;
+
+            case R.id.goBack:
+                Toast.makeText(this,"Returning", Toast.LENGTH_SHORT);
+                openSearchResults();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+    public void openLogin(){
+        Intent intent = new Intent(this, LoginPage.class);
+        startActivity(intent);
+        finish();
+    }
+    public void openSearchResults(){
+        Intent intent = new Intent(this, SearchResultPage.class);
+        startActivity(intent);
+        finish();
+
+    }
     /*
     public boolean onOptionsItemSelected(MenuItem item){
         Intent myIntent = new Intent(this, SearchResultPage.class);
