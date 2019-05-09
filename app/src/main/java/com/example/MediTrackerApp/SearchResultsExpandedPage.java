@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 public class SearchResultsExpandedPage extends AppCompatActivity {
 
     //TextView for displaying data.
@@ -65,9 +67,6 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
 
 
 
-
-
-
         //Ben -->
         //TODO: (1) Need to create another listview similar to the custom one i made for the compoment page.
         //TODO: (2) Maybe need to pass the arraylist of the Component page to here and display it.
@@ -81,8 +80,6 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
         //Laura -->
         //TODO: (4) Create a top-right menu bar that guides the user back to the search area. (will need to dispose data?)
         //TODO: (5) OPTIONAL: add a logout button or some shit.
-
-
 
 
         //ListView Details:

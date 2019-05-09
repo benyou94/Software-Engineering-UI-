@@ -122,8 +122,6 @@ public class SearchResultPage extends AppCompatActivity {
                             + " | subcomponent: " +item.getSubComponents()+1
                             + " | arraysize: " +subCompProductNameArrayList.size());
 
-
-
                 }
                 System.out.println("(!!!!!!) STOP ADDING SHIT ====================================================");
             }
@@ -131,11 +129,22 @@ public class SearchResultPage extends AppCompatActivity {
 
             if (testSamples != null){
                 for (Component item : testSamples){
-                    MedProduct subcomp = (MedProduct) item;
-                    //System.out.println("-----> name: " +subcomp.getName() +" hi: " +subcomp.getOrderID()+" " +subcomp.getOrderDate());
+
+
+                    MedProduct parent = (MedProduct) item;
+                    System.out.println("-----> parent name: " +parent.getName());
+
+
+                    System.out.println("-----> name: " +item.getSubComponents());
+                    System.out.println(" ---> Size: " +item.getSubComponents().size());
+
+                    //subCompProductNameArrayList.add();
 
 
                 }
+
+
+                populateScreenArray(testSamples);
             }
 
 
@@ -188,7 +197,6 @@ public class SearchResultPage extends AppCompatActivity {
             supplierNameArrayList.add(prod.getSupplier());
             orderIDArrayList.add(prod.getOrderID());
             orderDateArrayList.add(prod.getOrderDate());
-
 
             System.out.println("==Product Name: " +prod.getName()+" | productID: " +prod.getSKU() +" | ArraySize: " +productNameArrayList.size()+ " |subcomponent: " +prod.getSubComponents() );
 
