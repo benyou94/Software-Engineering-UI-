@@ -104,7 +104,7 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
         @Override
         public int getCount() {
             //dunno what this does. forgot about it :P -Ben
-            return 0;
+            return 1;
         }
 
         @Override

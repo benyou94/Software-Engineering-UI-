@@ -372,32 +372,6 @@ public class SearchResultPage extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflated = getMenuInflater();
-        inflated.inflate(R.menu.menu3dot, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.logout:
-                Toast.makeText(this,"Logging Out", Toast.LENGTH_SHORT);
-                finish();
-                openLogin();
-                return true;
-
-            case R.id.goBack:
-                Toast.makeText(this,"Returning", Toast.LENGTH_SHORT);
-                openSearchResults();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
-
     public void openLogin(){
         Intent intent = new Intent(this, LoginPage.class);
         startActivity(intent);
