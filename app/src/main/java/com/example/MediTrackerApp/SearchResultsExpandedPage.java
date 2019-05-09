@@ -2,12 +2,17 @@ package com.example.MediTrackerApp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 public class SearchResultsExpandedPage extends AppCompatActivity {
 
+    //TextView for displaying data.
     private TextView productNameTextView;
     private TextView productSKUTextView;
     private TextView suppplierNameTextView;
@@ -16,7 +21,13 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
     String resultExpandedProductNameString;
     String resultExpandedProductSKUString;
     String resultExpandedSupplierString;
+    String resultExpandedComponentProductNameString;
+    String resultExpandedComponentProductSKUString;
+    String resultExpandedComponentSupplierString;
 
+
+    //ListView for our subcomponent data (customized)
+    ListView subcomponentListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +46,12 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
         resultExpandedProductSKUString = getIntent().getStringExtra("passProductSKUName");
         resultExpandedSupplierString = getIntent().getStringExtra("passSupplierName");
 
+        resultExpandedComponentProductNameString = getIntent().getStringExtra("passComponentProductName");
+        resultExpandedComponentProductSKUString = getIntent().getStringExtra("passComponentProductSKU");
+        resultExpandedComponentSupplierString = getIntent().getStringExtra("passComponentSupplierName");
+
+
+
         //This finds the TextView from the XML Page and assignes it into our textview created here
         productNameTextView = (TextView)findViewById(R.id.passProductNamePrevAct);
         productSKUTextView = (TextView)findViewById(R.id.passProductSKUPrevAct);
@@ -45,6 +62,10 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
         productNameTextView.setText("Product Name: " +resultExpandedProductNameString);
         productSKUTextView.setText("Product ID: " +resultExpandedProductSKUString);
         suppplierNameTextView.setText("Supplier: " +resultExpandedSupplierString);
+
+
+
+
 
 
         //Ben -->
@@ -61,7 +82,71 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
         //TODO: (4) Create a top-right menu bar that guides the user back to the search area. (will need to dispose data?)
         //TODO: (5) OPTIONAL: add a logout button or some shit.
 
+
+
+
+        //ListView Details:
+
+        //Gets the listview from searchresultpage
+        subcomponentListView = (ListView)findViewById(R.id.resultExplandListView);
+
+        //Creates a customAdapter (custom listview) for the listview
+        CustomAdapter customAdapter = new CustomAdapter();
+
+        //sets the listview to the custom adapter
+        subcomponentListView.setAdapter(customAdapter);
+
     }
+
+    //CustomAdapter for the custom ListView Display (these methods are generated automatically to handle the custom ListView)
+    class CustomAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            //dunno what this does. forgot about it :P -Ben
+            return 0;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        //The "View" method essentially displays all the data out, customized listview.
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            //Creating a view and creating variables to grab data and store them in
+            convertView = getLayoutInflater().inflate(R.layout.listview2_detail,null);
+
+            //This assigns the listview_detail's TextViews into a variable we can display
+            productNameTextView = (TextView) convertView.findViewById((R.id.componentNameTextView));
+            productSKUTextView =  (TextView) convertView.findViewById(R.id.componentSKUTextView);
+            suppplierNameTextView = (TextView) convertView.findViewById((R.id.componentSupplierTextView));
+
+
+            //Dummy Data: Change the array names here to the WebAPI's Array.
+            //This also prints in the UI (SearchResultsExpandedPage) to accurately display data.
+            productNameTextView.setText("Component Name: " +resultExpandedComponentProductNameString);
+            productSKUTextView.setText("Component SKU: " +resultExpandedComponentProductSKUString);
+            suppplierNameTextView.setText("Component Supplier: " +resultExpandedComponentSupplierString);
+
+
+            //System.out.println("String Array contents: " +productNameStringArray[position] + " | position#: " +position);
+            //System.out.println("--ArayList stuff: "  + productNameArrayList.get(position)+" | arraylistContents: " +productNameArrayList.size());
+
+            //textview_name.setText(productNameString[0]=productSKUSting);
+
+
+            return convertView;
+        }
+    }
+
 
     /*
     public boolean onOptionsItemSelected(MenuItem item){
@@ -69,6 +154,8 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
         startActivityForResult(myIntent, 0);
         return true;
     }*/
+
+
 
 
 }

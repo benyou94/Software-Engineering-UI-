@@ -58,6 +58,9 @@ public class SearchResultPage extends AppCompatActivity {
     ArrayList<String> orderDateArrayList = new ArrayList<String>();
 
     //Component Data: Creating Arraylist to hold/pass data to the next page.
+    ArrayList<String> subCompProductNameArrayList = new ArrayList<String>();
+    ArrayList<String> subCompProductIDArrayList = new ArrayList<String>();
+    ArrayList<String> subCompSupplierArrayList = new ArrayList<String>();
 
 
 
@@ -107,16 +110,33 @@ public class SearchResultPage extends AppCompatActivity {
                             */
                     //TODO this is for component data - a different screen
 
-                    System.out.println("===== Component Name: " +item.getName()+" | ProductID: " +item.getSKU()+ " | Supplier: " +item.getSupplier());
+                    subCompProductNameArrayList.add(item.getName());
+                    subCompProductIDArrayList.add(item.getSKU());
+                    subCompSupplierArrayList.add(item.getSupplier());
+
+                    System.out.println("===== Component Name: " +item.getName()+" | ProductID: " +item.getSKU()+ " | Supplier: " +item.getSupplier()
+                            + " | subcomponent: " +item.getSubComponents()+1
+                            + " | arraysize: " +subCompProductNameArrayList.size());
+
 
 
                 }
-
+                System.out.println("(!!!!!!) STOP ADDING SHIT ====================================================");
             }
+
+
+            if (testSamples != null){
+                for (Component item : testSamples){
+                    MedProduct subcomp = (MedProduct) item;
+                    //System.out.println("-----> name: " +subcomp.getName() +" hi: " +subcomp.getOrderID()+" " +subcomp.getOrderDate());
+
+
+                }
+            }
+
 
         //Gets the listview from searchresultpage
         listview = (ListView)findViewById(R.id.listView);
-
 
         //Creates a customAdapter (custom listview) for the listview
         CustomAdapter customAdapter = new CustomAdapter();
@@ -138,6 +158,10 @@ public class SearchResultPage extends AppCompatActivity {
                 intent.putExtra("passProductSKUName", productIDArrayList.get(position));
                 intent.putExtra("passSupplierName",supplierNameArrayList.get(position));
 
+                intent.putExtra("passComponentProductName", subCompProductNameArrayList.get(position));
+                intent.putExtra("passComponentProductSKU", subCompProductIDArrayList.get(position));
+                intent.putExtra("passComponentSupplierName", subCompSupplierArrayList.get(position));
+
 
                 //Starts the SearchResultsExpanded Activity.
                 startActivityForResult(intent,position);
@@ -154,15 +178,19 @@ public class SearchResultPage extends AppCompatActivity {
         for (Component item : data) {
             MedProduct prod = (MedProduct) item;
 
-            System.out.println("==Product Name: " +prod.getName()+" | productID: " +prod.getSKU());
-
             //Grabs the data and puts it into the arrayList.
             productNameArrayList.add(prod.getName());
             productIDArrayList.add(prod.getSKU());
             supplierNameArrayList.add(prod.getSupplier());
             orderIDArrayList.add(prod.getOrderID());
             orderDateArrayList.add(prod.getOrderDate());
+
+
+            System.out.println("==Product Name: " +prod.getName()+" | productID: " +prod.getSKU() +" | ArraySize: " +productNameArrayList.size()+ " |subcomponent: " +prod.getSubComponents() );
+
         }
+
+        System.out.println("======================================================");
     }
 
 
