@@ -12,6 +12,9 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+/**
+ * @author Lisa Chen and Ben You
+ */
 public class SearchResultsExpandedPage extends AppCompatActivity {
 
     //TextView for displaying data.
@@ -23,9 +26,9 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
     String resultExpandedProductNameString;
     String resultExpandedProductSKUString;
     String resultExpandedSupplierString;
-    String resultExpandedComponentProductNameString;
-    String resultExpandedComponentProductSKUString;
-    String resultExpandedComponentSupplierString;
+    ArrayList<String> resultExpandedComponentProductNameString;
+    ArrayList<String>  resultExpandedComponentProductSKUString;
+    ArrayList<String> resultExpandedComponentSupplierString;
 
 
     //ListView for our subcomponent data (customized)
@@ -48,9 +51,9 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
         resultExpandedProductSKUString = getIntent().getStringExtra("passProductSKUName");
         resultExpandedSupplierString = getIntent().getStringExtra("passSupplierName");
 
-        resultExpandedComponentProductNameString = getIntent().getStringExtra("passComponentProductName");
-        resultExpandedComponentProductSKUString = getIntent().getStringExtra("passComponentProductSKU");
-        resultExpandedComponentSupplierString = getIntent().getStringExtra("passComponentSupplierName");
+        resultExpandedComponentProductNameString = getIntent().getStringArrayListExtra("passComponentProductName");
+        resultExpandedComponentProductSKUString = getIntent().getStringArrayListExtra("passComponentProductSKU");
+        resultExpandedComponentSupplierString = getIntent().getStringArrayListExtra("passComponentSupplierName");
 
 
 
@@ -93,6 +96,8 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
         //sets the listview to the custom adapter
         subcomponentListView.setAdapter(customAdapter);
 
+
+
     }
 
     //CustomAdapter for the custom ListView Display (these methods are generated automatically to handle the custom ListView)
@@ -101,7 +106,7 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
         @Override
         public int getCount() {
             //dunno what this does. forgot about it :P -Ben
-            return 1;
+            return resultExpandedComponentProductNameString.size();
         }
 
         @Override
@@ -129,9 +134,13 @@ public class SearchResultsExpandedPage extends AppCompatActivity {
 
             //Dummy Data: Change the array names here to the WebAPI's Array.
             //This also prints in the UI (SearchResultsExpandedPage) to accurately display data.
-            productNameTextView.setText("Component Name: " +resultExpandedComponentProductNameString);
-            productSKUTextView.setText("Component SKU: " +resultExpandedComponentProductSKUString);
-            suppplierNameTextView.setText("Component Supplier: " +resultExpandedComponentSupplierString);
+            System.out.println(resultExpandedComponentProductNameString.size());
+//            for (int i = 0; i < resultExpandedComponentProductNameString.size(); i++) {
+
+                productNameTextView.setText("Component Name: " +resultExpandedComponentProductNameString.get(position));
+                productSKUTextView.setText("Component SKU: " +resultExpandedComponentProductSKUString.get(position));
+                suppplierNameTextView.setText("Component Supplier: " +resultExpandedComponentSupplierString.get(position));
+//            }
 
 
             //System.out.println("String Array contents: " +productNameStringArray[position] + " | position#: " +position);
