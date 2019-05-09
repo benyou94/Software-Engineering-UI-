@@ -7,6 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,11 +17,13 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.APIClientAccess.BlockChainQueryAPIClientUsage;
 import com.example.Data.Component;
 import com.example.Data.MedProduct;
 import com.example.ResultParsers.QueryResultParser;
+import com.example.UnitTesting.ComponentTestGenerator;
 import com.example.UnitTesting.TestDataGenerator;
 
 import org.json.JSONArray;
@@ -38,6 +43,7 @@ public class SearchResultPage extends AppCompatActivity {
     ListView listview;
     Context context;
     boolean asyncTaskDone = false;
+    ArrayList<Component> currentArray;
 
 
     //Dummy data test 1. can remove once we get the official data.
@@ -57,6 +63,9 @@ public class SearchResultPage extends AppCompatActivity {
     ArrayList<String> orderDateArrayList = new ArrayList<String>();
 
     //Component Data: Creating Arraylist to hold/pass data to the next page.
+    ArrayList<String> subCompProductNameArrayList = new ArrayList<String>();
+    ArrayList<String> subCompProductIDArrayList = new ArrayList<String>();
+    ArrayList<String> subCompSupplierArrayList = new ArrayList<String>();
 
 
 
@@ -90,9 +99,12 @@ public class SearchResultPage extends AppCompatActivity {
             ArrayList<Component> queryData = TestDataGenerator.getQueryData(context);
             ArrayList<Component> componentData = TestDataGenerator.getComponentData(context);
 
+            ComponentTestGenerator test = new ComponentTestGenerator();
+            ArrayList<Component> testSamples = test.getTestProducts();
+
             //SearchResultPage itemlist populate
             if (queryData != null) {
-                populateScreenArray(queryData);
+//                populateScreenArray(queryData);
             }
 
             //Component Data: store component stuff here and pass it to page 4. (searchresultexpanded)
@@ -103,16 +115,42 @@ public class SearchResultPage extends AppCompatActivity {
                             */
                     //TODO this is for component data - a different screen
 
-                    System.out.println("===== Component Name: " +item.getName()+" | ProductID: " +item.getSKU()+ " | Supplier: " +item.getSupplier());
+                    subCompProductNameArrayList.add(item.getName());
+                    subCompProductIDArrayList.add(item.getSKU());
+                    subCompSupplierArrayList.add(item.getSupplier());
+
+                    System.out.println("===== Component Name: " +item.getName()+" | ProductID: " +item.getSKU()+ " | Supplier: " +item.getSupplier()
+                            + " | subcomponent: " +item.getSubComponents()+1
+                            + " | arraysize: " +subCompProductNameArrayList.size());
+
+                }
+                System.out.println("(!!!!!!) STOP ADDING SHIT ====================================================");
+            }
+
+
+            if (testSamples != null){
+                for (Component item : testSamples){
+
+
+                    MedProduct parent = (MedProduct) item;
+                    System.out.println("-----> parent name: " +parent.getName());
+
+
+                    System.out.println("-----> name: " +item.getSubComponents());
+                    System.out.println(" ---> Size: " +item.getSubComponents().size());
+
+                    //subCompProductNameArrayList.add();
 
 
                 }
 
+                currentArray = testSamples;
+                populateScreenArray(testSamples);
             }
+
 
         //Gets the listview from searchresultpage
         listview = (ListView)findViewById(R.id.listView);
-
 
         //Creates a customAdapter (custom listview) for the listview
         CustomAdapter customAdapter = new CustomAdapter();
@@ -130,9 +168,7 @@ public class SearchResultPage extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), SearchResultsExpandedPage.class);
 
                 //(!) This will pass the data to the next activity.
-                intent.putExtra("passProductName", productNameArrayList.get(position));
-                intent.putExtra("passProductSKUName", productIDArrayList.get(position));
-                intent.putExtra("passSupplierName",supplierNameArrayList.get(position));
+                updateScreenArray(intent, position);
 
 
                 //Starts the SearchResultsExpanded Activity.
@@ -141,15 +177,47 @@ public class SearchResultPage extends AppCompatActivity {
         });
     }
 
+    private void resetCompArrays() {
+        subCompProductNameArrayList = new ArrayList<>();
+        subCompProductIDArrayList = new ArrayList<>();
+        subCompSupplierArrayList = new ArrayList<>();
+    }
+
+    private void updateScreenArray(Intent intent, int position) {
+        intent.putExtra("passProductName", productNameArrayList.get(position));
+        intent.putExtra("passProductSKUName", productIDArrayList.get(position));
+        intent.putExtra("passSupplierName",supplierNameArrayList.get(position));
+
+        ArrayList<Component> subcomponents = currentArray.get(position).getSubComponents();
+        System.out.println("LisaSize: " + subcomponents.size());
+
+        resetCompArrays();
+        populateComponentArray(subcomponents);
+
+
+//        for (int i = 0; i < subcomponents.size(); i++) {
+            intent.putExtra("passComponentProductName", subCompProductNameArrayList);
+            intent.putExtra("passComponentProductSKU", subCompProductIDArrayList);
+            intent.putExtra("passComponentSupplierName", subCompSupplierArrayList);
+//        }
+
+        reassignProductArrayList();
+    }
+
+    private void reassignProductArrayList() {
+        productNameArrayList = subCompProductNameArrayList;
+        productIDArrayList = subCompProductIDArrayList;
+        supplierNameArrayList = subCompSupplierArrayList;
+    }
+
     /**
      * Populates the array that is displayed onto the UI with the MedProduct data.
      * @param data The data to display
      */
+    //Product/SKU/Suppl;ier/OrderDate Data
     private void populateScreenArray(ArrayList<Component> data) {
         for (Component item : data) {
             MedProduct prod = (MedProduct) item;
-
-            System.out.println("==Product Name: " +prod.getName()+" | productID: " +prod.getSKU());
 
             //Grabs the data and puts it into the arrayList.
             productNameArrayList.add(prod.getName());
@@ -157,7 +225,23 @@ public class SearchResultPage extends AppCompatActivity {
             supplierNameArrayList.add(prod.getSupplier());
             orderIDArrayList.add(prod.getOrderID());
             orderDateArrayList.add(prod.getOrderDate());
+
+            System.out.println("==Product Name: " +prod.getName()+" | productID: " +prod.getSKU() +" | ArraySize: " +productNameArrayList.size()+ " |subcomponent: " +prod.getSubComponents() );
+
         }
+
+        System.out.println("======================================================");
+    }
+
+    private void populateComponentArray(ArrayList<Component> data) {
+        for (Component item : data) {
+
+            //Grabs the data and puts it into the arrayList.
+            subCompProductNameArrayList.add(item.getName());
+            subCompProductIDArrayList.add(item.getSKU());
+            subCompSupplierArrayList.add(item.getSupplier());
+        }
+
     }
 
 
@@ -174,10 +258,10 @@ public class SearchResultPage extends AppCompatActivity {
         //return 0 if user enters etherium
 
         //TODO you still need to pass the blockchain reference from the dropdown
-        //queryTask.execute("0", productSKUString, productNameString, supplierNameString);
+//        queryTask.execute("1", "ABC123", productNameString, supplierNameString);
 
-        //don't populate data until it is complete
-        //while (!asyncTaskDone);
+//        don't populate data until it is complete
+//        while (!asyncTaskDone);
 
         if (productAPIResults != null)
             populateScreenArray(productAPIResults);
@@ -216,7 +300,7 @@ public class SearchResultPage extends AppCompatActivity {
             TextView textview_orderID = (TextView)convertView.findViewById(R.id.orderIDTextView);
             TextView textview_orderDate = (TextView)convertView.findViewById(R.id.orderDateTextView);
 
-
+            System.out.println("Position here" + position);
             //Dummy Data: Change the array names here to the WebAPI's Array.
             //This also prints in the UI (SearchResultsPage) to accurately display data.
             textview_name.setText("Product Name: " +productNameArrayList.get(position));
@@ -332,5 +416,19 @@ public class SearchResultPage extends AppCompatActivity {
             loadingBar.setMessage("\t" + LOADING_DIALOG_TEXT);
             loadingBar.show();
         }
+    }
+
+
+    public void openLogin(){
+        Intent intent = new Intent(this, LoginPage.class);
+        startActivity(intent);
+        finish();
+    }
+    //function to return to previous page
+    public void openSearchResults(){
+        Intent intent = new Intent(this, SearchParameterPage.class);
+        startActivity(intent);
+        finish();
+
     }
 }
