@@ -88,26 +88,26 @@ public class ComponentAPIClientUsage {
      * @params getParams This is the parameters passed through to the API with GET
      */
     private void initializeDataArray(RequestParams getParams) {
-        MedDeviceAPIClient.get(DB_ACCESS_URL,getParams, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    data_array = response.getJSONArray(RESULT_DATA_KEY);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.d("Error", "Cannot initialize database data with given params");
-                    data_array = null;
-                }
-            }
-
-            //should be unused method for debugging
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Log.d("Error", "Somehow accessed onSuccess() method with a JSONArray " +
-                        "result for post");
-                data_array = null;
-            }
-        });
+//        MedDeviceAPIClient.get(DB_ACCESS_URL,getParams, new JsonHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                try {
+//                    data_array = response.getJSONArray(RESULT_DATA_KEY);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                    Log.d("Error", "Cannot initialize database data with given params");
+//                    data_array = null;
+//                }
+//            }
+//
+//            //should be unused method for debugging
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+//                Log.d("Error", "Somehow accessed onSuccess() method with a JSONArray " +
+//                        "result for post");
+//                data_array = null;
+//            }
+//        });
     }
 
     /**

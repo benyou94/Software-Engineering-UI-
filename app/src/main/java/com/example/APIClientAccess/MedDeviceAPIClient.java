@@ -1,5 +1,7 @@
 package com.example.APIClientAccess;
 
+import android.util.Log;
+
 import com.loopj.android.http.SyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -20,16 +22,26 @@ import com.loopj.android.http.RequestParams;
 public class MedDeviceAPIClient {
     private static final String BASE_URL = "https://blockchain-restful-api.herokuapp.com/api/";
     private static SyncHttpClient client = new SyncHttpClient();
+    private static final int WAIT_TIME = 200000;
+    private static final int MAX_TRIES = 20;
 
     /**
      * HTTP GET method to access the API.
      * @param url Add-on url to the base website for the API
-     * @param params The parameters to request data
      * @param responseHandler The response
      */
-    public static void get(String url, RequestParams params, AsyncHttpResponseHandler
-            responseHandler) {
-        client.get(getAbsoluteUrl(url), params, responseHandler);
+    public static void get(String url, AsyncHttpResponseHandler
+//    public static void get(String url, RequestParams params, AsyncHttpResponseHandler
+            responseHandler) throws InterruptedException {
+
+        Log.d("LisaURL", getAbsoluteUrl(url));
+        client.addHeader("Content-Type", "application/json");
+        client.setResponseTimeout(WAIT_TIME);
+        client.setTimeout(WAIT_TIME);
+        client.setConnectTimeout(WAIT_TIME);
+
+        client.setMaxRetriesAndTimeout(MAX_TRIES,WAIT_TIME);
+        client.get(getAbsoluteUrl(url), responseHandler);
     }
 
     /**

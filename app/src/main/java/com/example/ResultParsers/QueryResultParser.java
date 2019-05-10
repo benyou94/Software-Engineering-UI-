@@ -1,5 +1,7 @@
 package com.example.ResultParsers;
 
+import android.util.Log;
+
 import com.example.APIClientAccess.ComponentAPIClientUsage;
 import com.example.Data.Component;
 import com.example.Data.MedProduct;
@@ -34,7 +36,19 @@ public class QueryResultParser implements ResultParserInterface {
      */
     public QueryResultParser(JSONArray results) throws JSONException {
         parsedResults = new ArrayList<>();
+        Log.d("LisaResultsQueryParser", results.toString());
         parseResults(results);
+    }
+
+    /**
+     * Constructs the parser with the JSONArray results of MedProducts to parse.
+     * @param results The results in JSONArray format that needs to be parsed
+     * @throws JSONException
+     */
+    public QueryResultParser(JSONObject results) throws JSONException {
+        parsedResults = new ArrayList<>();
+        Log.d("LisaRightParser", "Got to here");
+        parseObjResults(results);
     }
 
     /**
@@ -81,6 +95,49 @@ public class QueryResultParser implements ResultParserInterface {
             Collections.sort(parsedResults);
             removeDuplicateResults();
             addComponents();
+        }
+    }
+
+    /**
+     * Parses the JSON results into Medical Product objects.
+     * @param results The results in JSONArray format
+     * @throws JSONException
+     */
+    private void parseObjResults(JSONObject results) throws JSONException {
+        Log.d("LisaparseResults",results.toString());
+        if (results != null) {
+            String[] keys = {PRODUCT_ID_KEY, PRODUCT_NAME_KEY, SUPPLIER_KEY, ORDER_ID_KEY,
+                    ORDER_DATE_KEY};
+            String[] params = new String[keys.length];
+
+            //retrieves each result from the array for parsing
+//            for (int i = 0; i < results.length(); i++) {
+//                JSONObject result = results.getJSONObject(i);
+
+                //retrieves the parameter of each result to pass to MedProduct
+                for (int key = 0; key < keys.length; key++) {
+                    try {
+                        params[key] = results.getString(keys[key]);
+                        Log.d("LisaParsing", params[key]);
+                    }
+                    catch (JSONException e) {
+                        params[key] = "";
+                    }
+                }
+
+//                ArrayList<Component> components = getParsedComponents(params[0]);
+//                MedProduct newProduct = new MedProduct(params[0],params[1],params[2], params[3],
+//                        params[4], components);
+
+                MedProduct newProduct = new MedProduct(params[0],params[1],params[2], params[3],
+                        params[4]);
+
+                parsedResults.add(newProduct);
+//            }
+            //must sort before removing duplicate results and adding subcomponents
+//            Collections.sort(parsedResults);
+//            removeDuplicateResults();
+//            addComponents();
         }
     }
 

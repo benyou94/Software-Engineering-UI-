@@ -28,7 +28,9 @@ import com.example.UnitTesting.TestDataGenerator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -258,11 +260,12 @@ public class SearchResultPage extends AppCompatActivity {
         //return 0 if user enters etherium
 
         //TODO you still need to pass the blockchain reference from the dropdown
-//        queryTask.execute("1", "ABC123", productNameString, supplierNameString);
+        queryTask.execute("1", "ABC123", null, null);
 
 //        don't populate data until it is complete
 //        while (!asyncTaskDone);
 
+        while (productAPIResults == null);
         if (productAPIResults != null)
             populateScreenArray(productAPIResults);
     }
@@ -351,11 +354,14 @@ public class SearchResultPage extends AppCompatActivity {
 
             try {
                 BlockChainQueryAPIClientUsage clientUser = new BlockChainQueryAPIClientUsage();
-                JSONArray results = clientUser.getJSONResults(params[0], params[1],params[2],
+                JSONObject results = clientUser.getJSONResults(params[0], params[1],params[2],
                         params[3]);
+                Log.d("LisaAPIConnectAtSearch", results.toString());
                 QueryResultParser queryParser = new QueryResultParser(results);
+                Log.d("LisaDoIn", "got to here");
                 productAPIResults = queryParser.getParsedResults();
-                asyncTaskDone = true;
+                Log.d("LisaAPIResults", productAPIResults.get(0).getName());
+//                asyncTaskDone = true;
 //                for (Component c : productAPIResults) {
 //                    MedProduct product = (MedProduct) c;
 //                    Log.d("LisaAPIConnectionTest", "Name: " + c.getName() + ", SKU: " +
@@ -379,7 +385,7 @@ public class SearchResultPage extends AppCompatActivity {
                 }
 
                 return queryID; //TODO do not pass queryID
-            } catch (JSONException e) {
+            } catch (JSONException | InterruptedException | IOException e) {
                 return "Unable to retrieve data. Parameters may be invalid.";
             }
         }

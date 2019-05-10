@@ -4,6 +4,11 @@ import android.util.Log;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import org.json.*;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -28,7 +33,7 @@ public class BlockChainQueryAPIClientUsage {
     private static final String SUPPLIER_KEY = "previousOwner";
     private static final String RESULT_DATA_KEY = "data";
     private String queryID;
-    private JSONArray data_array;
+    private JSONObject data_array;
 
     /** Default constructor */
     public BlockChainQueryAPIClientUsage() {}
@@ -55,18 +60,38 @@ public class BlockChainQueryAPIClientUsage {
      * @param supplier This is the supplier of the product you are trying to find
      * @return The data from the API as a JSONArray
      */
-    public JSONArray getJSONResults(String blockchainID, String productID, String productName,
-                                    String supplier) {
+    public JSONObject getJSONResults(String blockchainID, String productID, String productName,
+                                     String supplier) throws JSONException, InterruptedException, IOException {
 
         initializeQueryID(populatePOSTParams(blockchainID, productID, productName, supplier));
 
         //wait until queryID is available
-        Log.d("LisaWhileLoop1", "Entered while loop in blockchain- check for infinite loop");
         while (queryID == null);
-        Log.d("LisaWhileLoop1", "Ended loop - not infinite");
 
-        initializeDataArray(populateGETParams(queryID));
 
+        Log.d("LisaAPIConnectionTest", "queryID before data array: " + queryID);
+
+
+        boolean gotQuery = false;
+        while (!gotQuery) {
+//            tries++;
+            try {
+                initializeDataArray(populateGETParams(queryID));
+                if (data_array != null)
+                    gotQuery = true;
+            }
+            catch (Exception e) {
+                gotQuery = false;
+            }
+        }
+
+
+        if (data_array != null) {
+            Log.d("LisaAPIConnectionTest", data_array.toString());
+        }
+        else {
+            Log.d("LisaAPIConnectionTest", "DATA IS STILL NULL = FAIL");
+        }
         return data_array;
     }
 
@@ -102,12 +127,15 @@ public class BlockChainQueryAPIClientUsage {
      * Initializes an JSONArray with the data attained from the API through GET.
      * @params getParams The parameters needed to access GET in the API
      */
-    public void initializeDataArray(final RequestParams getParams) {
-        MedDeviceAPIClient.get(QUERY_ACCESS_URL,getParams, new JsonHttpResponseHandler() {
+    public void initializeDataArray(final RequestParams getParams) throws InterruptedException, UnsupportedEncodingException {
+        MedDeviceAPIClient.get(getGETUrl(), new JsonHttpResponseHandler() {
+            //        MedDeviceAPIClient.get(QUERY_ACCESS_URL, getParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    data_array = response.getJSONArray(RESULT_DATA_KEY);
+                    Log.d("LIsaAPIConnection", response.toString());
+                    data_array = response.getJSONObject(RESULT_DATA_KEY);
+                    Log.d("LisaAPIConnectionTest", data_array.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.d("Error", "Cannot initialize blockchain data with given params");
@@ -121,7 +149,33 @@ public class BlockChainQueryAPIClientUsage {
                         "result for post");
                 data_array = null;
             }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+//                super.onFailure(statusCode, headers, throwable, errorResponse);
+
+                Log.d("LisaOnFailureStatus: ", String.valueOf(statusCode));
+                if (errorResponse != null)
+                    Log.d("LisaOnFailureResponse: ", errorResponse.toString());
+                super.onFailure(statusCode,headers, throwable, errorResponse);
+            }
+
         });
+    }
+
+    /**
+     * Gives the URL to access the GET for the API.
+     * @return The URL for the GET access.
+     */
+    private String getGETUrl() throws UnsupportedEncodingException {
+//        return QUERY_ACCESS_URL + "?" + QUERY_ID_KEY + "=" + queryID;
+        StringBuilder result = new StringBuilder();
+        result.append(QUERY_ACCESS_URL + "?");
+        result.append(URLEncoder.encode(QUERY_ID_KEY, "UTF-8"));
+        result.append("=");
+        result.append(URLEncoder.encode(queryID, "UTF-8"));
+        Log.d("LisaStringBuilder", result.toString());
+        return result.toString();
     }
 
     /**
