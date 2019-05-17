@@ -177,6 +177,10 @@ public class SearchResultPage extends AppCompatActivity {
                 startActivityForResult(intent,position);
             }
         });
+
+
+        //ComponentTestGenerator test = new ComponentTestGenerator();
+        //ArrayList<Component> testSamples = test.getTestProducts();
     }
 
     private void resetCompArrays() {

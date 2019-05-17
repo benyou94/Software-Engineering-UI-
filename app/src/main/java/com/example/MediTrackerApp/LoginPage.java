@@ -66,7 +66,11 @@ public class LoginPage extends AppCompatActivity {
         System.out.println("password: " +userPassword);
 
 
-        if (userID.equals("") && userPassword.equals("")){
+        if (userID.equals("") && userPassword.equals("") ){
+            Intent intent = new Intent(this, SearchParameterPage.class);
+            startActivity(intent);
+        }
+        else if (userID.equals("hussian") && userPassword.equals("zaidi")){
             Intent intent = new Intent(this, SearchParameterPage.class);
             startActivity(intent);
         }
